@@ -1,8 +1,18 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /* padding: 50px; */
+  background-color: #f4f5f7;
+  font-family: 'Roboto Slab', sans-serif;
 }
 
-a {
+/* a {
   color: #00B7FF;
+} */
+
+.center {
+	text-align: center;
+}
+
+.promise {
+	text-align: center;
+	color: #4BB543;
 }

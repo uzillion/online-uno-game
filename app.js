@@ -8,6 +8,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var expSession = require('express-session');
+var passport = require('passport');
+var local = require('passport-local');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -27,8 +30,39 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(expSession({
+  secret: 'bazinga',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new local({
+  passReqToCallback: true
+}, (req, username, password, done) => {
+  getUser(username, (user,err)=> {
+    if (err) { return done(err); }
+    if (!user) { return done(null, false); }
+    return bcrypt.compare(req.body.password, user.password, function(err, res) {
+      if (!res) { console.log("Auth failed"); return done(null, false); }
+      return done(null, user);
+    });
+  });
+}));
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+app.use(function(req, res, next) {
+	res.locals.user = req.user;
+	next();
+});
+
 app.use('/', index);
-app.use('/users', users);
+app.use('/user', users);
 app.use('/test', test);
 
 // catch 404 and forward to error handler
