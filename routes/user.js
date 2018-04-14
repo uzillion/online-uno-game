@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const passport	= require("passport");
-// const addUser = require("../db/user/addUser");
+const addUser = require("../db/user/addUser");
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -21,10 +21,9 @@ router.post("/register", function(req, res) {
 	var usernameEx = /^[a-zA-Z0-9]+([_\.]?[a-zA-Z0-9]){4,24}$/;
 	if(emailEx.test(req.body.email) && usernameEx.test(req.body.username)) {
     var hashedPass;
-    console.log(req.body.password);
     bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
       if(!err) {
-        // addUser({username: req.body.username, password: hash, email: req.body.email, privilege: 1});
+        addUser({username: req.body.username, password: hash, email: req.body.email, privilege: 1});
       }
       else {
         console.log("bcrypt error:"+err);

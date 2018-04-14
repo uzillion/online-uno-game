@@ -8,9 +8,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
+
 var expSession = require('express-session');
 var passport = require('passport');
 var local = require('passport-local');
+const bcrypt = require('bcrypt');
+const getUser = require('./db/user/getUser');
+
 var index = require('./routes/index');
 var user = require('./routes/user');
 var gameRoom = require('./routes/gameRoom');
@@ -42,8 +47,8 @@ passport.use(new local({
   passReqToCallback: true
 }, (req, username, password, done) => {
   getUser(username, (user,err)=> {
-    if (err) { return done(err); }
-    if (!user) { return done(null, false); }
+    // if (err) { return done(err); }
+    if (!user) { console.log("!user"); return done(null, false); }
     return bcrypt.compare(req.body.password, user.password, function(err, res) {
       if (!res) { console.log("Auth failed"); return done(null, false); }
       return done(null, user);
