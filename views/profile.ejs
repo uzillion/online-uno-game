@@ -1,0 +1,35 @@
+<% include ./partials/header %>
+<h1> This is user profile<h1>
+
+
+
+
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+	<div class="row">
+		<div class="col-lg-3 col-sm-6" style=" margin:0 auto;">
+
+            <div class="card hovercard">
+                <div class="cardheader">
+
+                </div>
+                <div class="avatar">
+                    <img alt="" src="http://lorempixel.com/100/100/people/9/">
+                </div>
+                <div class="info">
+                    <div class="title">
+                    <% if (user){ %>
+                        <p> <%= user.username %> <p>
+                        <% } %>
+                    </div>
+                    <div class="desc">High Score</div>
+
+                </div>
+                
+            </div>
+
+        </div>
+
+	</div>
+</div>

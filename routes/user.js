@@ -49,5 +49,11 @@ router.get("/logout", function(req, res) {
 	req.logout();
 	res.redirect("/");
 });
+                       
+                       
+//Logout route
+router.get("/profile", function(req, res) {
+    res.render("profile", {title:"user profile"});
+});
 
 module.exports = router;
