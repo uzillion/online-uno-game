@@ -1,3 +1,4 @@
+
 <% include ./partials/header %>
 <div class="container">
 
@@ -6,46 +7,31 @@
 
   <div class="row">
     <div class="col-lg-6 portfolio-item">
-      <div class="card h-100">
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="#">Rooms</a>
-          </h4>
-          <table class="gridtable">
+
+      <div class="row">
+        <div class="col-lg-12 portfolio-item">
+        <div class="card h-100">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="#">Rooms</a>
+            </h4>
+            <table class="gridtable">
             <tr>
-                <th>Room Name</th><th>Action</th>
+              <th>Room Name</th><th>Action</th>
             </tr>
             <tr>
-                <td>Room 1</td><td>Join</td>
+              <td>Room 1</td><td>Join</td>
             </tr>
             <tr>
-                <td>Room 2</td><td>Join</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-6 portfolio-item">
-      <div class="card h-100">
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="#">Chat Space</a>
-          </h4>
-          <table class="gridtable">
-            <tr>
-                <th>Player Name</th><th>Content</th>
-            </tr>
-            <tr>
-                <td>Jerry</td><td>hahahahahahahahhahahhaa</td>
-            </tr>
-            <tr>
-                <td>Jack</td><td>hahhahahahahahahahahahahha</td>
+              <td>Room 2</td><td>Join</td>
             </tr>
           </table>
         </div>
       </div>
     </div>
-    <div class="col-lg-6 portfolio-item">
+  </div>
+    <div class="row">
+      <div class="col-lg-12 portfolio-item">
       <div class="card h-100">
         <div class="card-body">
           <h4 class="card-title">
@@ -65,6 +51,30 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+    <div class="col-lg-6 portfolio-item">
+      <div class="card h-100">
+        <div class="card-body">
+          <h4 class="card-title">
+            <a href="#">Chat Space</a>
+          </h4>
+           <li class="login page">
+            <div class="form">
+              <h3 class="title">What's your nickname?</h3>
+              <input class="usernameInput" type="text" maxlength="14" />
+            </div>
+           </li>
+
+          <script src="/scripts/lobby_chat.js"></script>
+        <ul id="messages"></ul>
+          <form action="">
+            <input id="m"  autocomplete="off" /><button>Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    
 
   </div>
   <!-- /.row -->
@@ -72,11 +82,7 @@
 </div>
 <!-- /.container -->
 
-</body>
-
-</html>
-<!--
-    <h1>SFSU CSC667 PROJECT</h1>
-    <p>This will be the uno game developed by Team-G</p>
+    <script src="/socket.io/socket.io.js"></script>
+    
   </body>
-</html> -->
+</html>
