@@ -7,9 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('term-project-team-g:server');
 var http = require('http');
-var numSockets = [];
-var username
-
+var sockets = [];
+  
 /**
  * Get port from environment and store in Express.
  */
@@ -26,8 +25,8 @@ var server = http.createServer(app);
 var io = require('socket.io')(server);
 
 io.on('connection', function(socket){
-  numSockets.push(socket);
-  console.log('#%s socket connected', numSockets.length);
+  sockets.push(socket);
+  console.log('#%s socket connected', sockets.length);
   //send a message
   socket.on('chat message', function(data){
     console.log(data);
@@ -35,8 +34,8 @@ io.on('connection', function(socket){
   });
   // user disconnect 
   socket.on('disconnect', function(data){
-    numSockets.splice(numSockets.indexOf(socket),1);
-    console.log('#%s socket disconnected', numSockets.length);
+    sockets.splice(sockets.indexOf(socket),1);
+    console.log('#%s socket disconnected', sockets.length);
   });
 });
 
