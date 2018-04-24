@@ -62,14 +62,22 @@ table.gridtable td {
 /*body { 
   font: 13px Helvetica, Arial; 
 }*/
-
-/*form { 
-  background: #000;
-  padding: 3px; 
-  position: fixed; 
-  bottom: 0; 
-  width: 100%; 
+/*#chat-box{
+  border-width: 200px;
+  border-color: rgb(235, 238, 244);
+  border-style: solid;
 }*/
+#messages{
+  border-width: 1px;
+  border-color: rgb(235, 238, 244);
+  border-style: solid;
+}
+form { 
+  padding: 3px; 
+  position: relative; 
+  top: 300; 
+  width: 100%; 
+}
 
 /*form input { 
   border: 0; 
@@ -78,12 +86,9 @@ table.gridtable td {
   margin-right: .5%; 
 }*/
 
-/*form button { 
-  width: 9%; 
-  background: rgb(130, 224, 255); 
-  border: left; 
-  padding: 10px; 
-}*/
+form button { 
+  background: rgb(166, 189, 224); 
+}
 
 #messages { 
   list-style-type: none; 
@@ -91,13 +96,13 @@ table.gridtable td {
   padding: 0; 
 }
 
-#messages li { 
+/*#messages li { 
   padding: 5px 10px; 
 }
 
 #messages li:nth-child(odd) { 
   background: #eee; 
-}
+}*/
 
 .row {
   height: inherit;

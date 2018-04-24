@@ -61,16 +61,21 @@
           </h4>
            <li class="login page">
             <div class="form">
-              <h3 class="title">What's your nickname?</h3>
-              <input id="nameInput" type="text" maxlength="14" />
+              <% if(user) { %>
+                username: <input id="nameInput" value = <%= user.username %> type="text" maxlength="14" disabled/>
+              <% } else { %>
+                <h4 class="title">What's your nickname?</h4>
+                <input id="nameInput" placeholder = "nickname" type="text" maxlength="14" />
+              <% } %>
             </div>
            </li>
-
+           <div class="container" width = 200 height = 100 color="blue">
+             
+           </div> 
           <script src="/scripts/lobby_chat.js"></script>
         <ul id="messages"></ul>
-          <form id = 'm-form' action="">
-            <input id="m" placeholder="message to someone"autocomplete="off"/>
-            <!-- clear the message field -->
+          <form action="">
+            <input id="m" placeholder="message"autocomplete="off"/>
             <button id ='click'> Send
             </button>
           </form>
@@ -86,6 +91,5 @@
 <!-- /.container -->
 
     <script src="/socket.io/socket.io.js"></script>
-    
   </body>
 </html>

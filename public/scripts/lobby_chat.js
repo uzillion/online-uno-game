@@ -11,7 +11,6 @@ $(function () {
       message: message.value,
       name: userName.value
     });
-      // $('#m').val('')};
       return false;
     });
     socket.on('chat message', function(msg){
