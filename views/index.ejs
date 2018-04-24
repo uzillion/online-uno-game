@@ -1,79 +1,108 @@
 <% include ./partials/header %>
 <div class="container">
-
   <!-- Page Heading -->
   <h1 class="my-4">Lobby</h1>
-
   <div class="row">
     <div class="col-lg-6 portfolio-item">
-      <div class="card h-100">
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="#">Rooms</a>
-          </h4>
-          <table class="gridtable">
-            <tr>
-                <th>Room Name</th><th>Action</th>
-            </tr>
-            <tr>
-                <td>Room 1</td><td>Join</td>
-            </tr>
-            <tr>
-                <td>Room 2</td><td>Join</td>
-            </tr>
-          </table>
+      <div class="row">
+        <div class="col-lg-12 card h-100">
+          <div class="card-body">
+          <div>
+              <h4 id="add-room" class="card-title title">Rooms <a href="#"><i class="fa fa-plus"></i></a></h4>
+          </div>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                      <th>Room Name</th><th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                      <td>Room 1</td><td><button type="button" class="btn btn-primary">Join</button></td>
+                  </tr>
+                  <tr>
+                      <td>Room 2</td><td><button type="button" class="btn btn-primary">Join</button></td>
+                  </tr>
+                  <tr>
+                      <td>Room 3</td><td><button type="button" class="btn btn-primary">Join</button></td>
+                  </tr>
+                  <tr>
+                      <td>Room 4</td><td><button type="button" class="btn btn-primary">Join</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 card h-100">
+          <div class="card-body">
+            <h4 class="card-title title">
+              <a href="#" >Leaderboard</a>
+            </h4>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                      <th>Name</th><th>Points</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                      <td>Jack</td><td>2000</td>
+                  </tr>
+                  <tr>
+                      <td>Jerry</td><td>1000</td>
+                  </tr>
+                  <tr>
+                      <td>Ben</td><td>500</td>
+                  </tr>
+                  <tr>
+                      <td>Ben</td><td>500</td>
+                  </tr>
+                  <tr>
+                      <td>Ben</td><td>500</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="col-lg-6 portfolio-item">
       <div class="card h-100">
         <div class="card-body">
-          <h4 class="card-title">
+          <h4 class="card-title title">
             <a href="#">Chat Space</a>
           </h4>
-          <table class="gridtable">
-            <tr>
-                <th>Player Name</th><th>Content</th>
-            </tr>
-            <tr>
-                <td>Jerry</td><td>hahahahahahahahhahahhaa</td>
-            </tr>
-            <tr>
-                <td>Jack</td><td>hahhahahahahahahahahahahha</td>
-            </tr>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                  <th>Player Name</th><th>Content</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                  <td>Jerry</td><td>hahahahahahahahhahahhaa</td>
+              </tr>
+              <tr>
+                  <td>Jack</td><td>hahhahahahahahahahahahahha</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
     </div>
     <div class="col-lg-6 portfolio-item">
-      <div class="card h-100">
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="#" >Leaderboard</a>
-          </h4>
-          <table class="gridtable">
-            <tr>
-                <th>Name</th><th>Points</th>
-            </tr>
-            <tr>
-                <td>Jack</td><td>1000</td>
-            </tr>
-            <tr>
-                <td>Jerry</td><td>2000</td>
-            </tr>
-          </table>
-        </div>
-      </div>
     </div>
-
   </div>
   <!-- /.row -->
-
 </div>
 <!-- /.container -->
-
 </body>
-
 </html>
 <!--
     <h1>SFSU CSC667 PROJECT</h1>

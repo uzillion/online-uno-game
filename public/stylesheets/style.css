@@ -8,6 +8,18 @@ body {
   color: #00B7FF;
 } */
 
+.title {
+  margin-bottom: 10px;
+  background-color: #e6e6e6;
+  border: 2px solid #cccccc;
+  border-radius: 2px;
+  padding: 2px 6px;
+}
+
+#add-room a {
+  margin-left: 78%;
+}
+
 .center {
 	text-align: center;
 }
@@ -51,4 +63,8 @@ table.gridtable td {
     border-style: solid;
     border-color: #666666;
     background-color: #ffffff;
+}
+
+.table-responsive {
+    max-height:200px;
 }
