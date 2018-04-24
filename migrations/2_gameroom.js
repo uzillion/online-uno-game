@@ -13,7 +13,12 @@ module.exports = {
         n_players: {
           type: Sequelize.INTEGER,
           allowNull: false,
-          defaultValue: 1
+          defaultValue: 0
+        },
+        locked: {
+          type: Sequelize.BOOLEAN,
+          allowNull: false,
+          defaultValue: 'f'
         }
       }
     );

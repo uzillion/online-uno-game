@@ -18,7 +18,7 @@ const getUser = require('./db/user/getUser');
 
 var index = require('./routes/index');
 var user = require('./routes/user');
-var gameRoom = require('./routes/gameRoom');
+var gameroom = require('./routes/gameroom');
 
 var app = express();
 
@@ -69,7 +69,7 @@ app.use(function(req, res, next) {
 
 app.use('/', index);
 app.use('/user', user);
-app.use('/gameroom', gameRoom);
+app.use('/gameroom', gameroom);
 
 
 // catch 404 and forward to error handler

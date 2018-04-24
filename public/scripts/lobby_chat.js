@@ -2,10 +2,10 @@
 $(function () {
   var message = document.getElementById('m'),
    userName = document.getElementById('nameInput')
-   
+
    numUsers = 0;
     var socket = io('http://localhost:3000');
-    $('form').submit(function(){
+    $('#chatForm').submit(function(){
       console.log('message sent');
       socket.emit('chat message', {
       message: message.value,

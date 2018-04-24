@@ -8,6 +8,17 @@ body {
   color: #00B7FF;
 } */
 
+#create_room {
+  position: absolute;
+  z-index: 2;
+  top: 20%;
+  left: 80%;
+}
+
+.fa-plus:hover {
+  color: green;
+}
+
 .title {
   margin-bottom: 10px;
   background-color: #e6e6e6;

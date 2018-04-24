@@ -9,6 +9,9 @@
           <div class="card-body">
           <div>
               <h4 id="add-room" class="card-title title">Rooms <a href="#"><i class="fa fa-plus"></i></a></h4>
+              <form action="/gameroom/create" method="post">
+                <input id="create_room" type="submit" class="btn btn-success" value="Create">
+              </form>
           </div>
             <div class="table-responsive">
               <table class="table table-hover">
@@ -19,16 +22,16 @@
                 </thead>
                 <tbody>
                   <tr>
-                      <td>Room 1</td><td><button type="button" class="btn btn-primary">Join</button></td>
+                      <td>Room 1</td><td><button type="button" class="btn btn-sm btn-primary">Join</button></td>
                   </tr>
                   <tr>
-                      <td>Room 2</td><td><button type="button" class="btn btn-primary">Join</button></td>
+                      <td>Room 2</td><td><button type="button" class="btn btn-sm btn-primary">Join</button></td>
                   </tr>
                   <tr>
-                      <td>Room 3</td><td><button type="button" class="btn btn-primary">Join</button></td>
+                      <td>Room 3</td><td><button type="button" class="btn btn-sm btn-primary">Join</button></td>
                   </tr>
                   <tr>
-                      <td>Room 4</td><td><button type="button" class="btn btn-primary">Join</button></td>
+                      <td>Room 4</td><td><button type="button" class="btn btn-sm btn-primary">Join</button></td>
                   </tr>
                 </tbody>
               </table>
@@ -93,7 +96,7 @@
           </div>
          <script src="/scripts/lobby_chat.js"></script>
        <ul id="messages"></ul>
-         <form action="">
+         <form id="chatForm" action="">
            <input id="m" placeholder="message"autocomplete="off"/>
            <button id ='click'> Send
            </button>
@@ -104,6 +107,7 @@
     </div>
   </div>
   <script src="/socket.io/socket.io.js"></script>
+  <script src="/scripts/create_room.js"></script>
 </body>
 </html>
 <!--

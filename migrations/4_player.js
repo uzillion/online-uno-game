@@ -28,9 +28,9 @@ module.exports = {
         }
       }
     )
-    // .then(() => {
-    //   return queryInterface.sequelize.query('ALTER TABLE "player" ADD CONSTRAINT "id" PRIMARY KEY ("user_id", "room_id")');
-    // })
+    .then(() => {
+      return queryInterface.sequelize.query('ALTER TABLE "player" ADD CONSTRAINT "id" PRIMARY KEY ("user_id", "room_id")');
+    })
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('user');
