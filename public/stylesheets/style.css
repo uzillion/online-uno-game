@@ -68,3 +68,57 @@ table.gridtable td {
 .table-responsive {
     max-height:200px;
 }
+/*
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }*/
+/*body {
+  font: 13px Helvetica, Arial;
+}*/
+/*#chat-box{
+  border-width: 200px;
+  border-color: rgb(235, 238, 244);
+  border-style: solid;
+}*/
+#messages{
+  border-width: 1px;
+  border-color: rgb(235, 238, 244);
+  border-style: solid;
+}
+form {
+  padding: 3px;
+  position: relative;
+  top: 300;
+  width: 100%;
+}
+
+/*form input {
+  border: 0;
+  padding: 10px;
+  width: 20%;
+  margin-right: .5%;
+}*/
+
+form button {
+  background: rgb(166, 189, 224);
+}
+
+#messages {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*#messages li {
+  padding: 5px 10px;
+}
+
+#messages li:nth-child(odd) {
+  background: #eee;
+}*/
+
+.row {
+  height: inherit;
+}
