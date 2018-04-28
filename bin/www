@@ -5,10 +5,10 @@
  */
 
 var app = require('../app');
+var io = require('./io');
 var debug = require('debug')('term-project-team-g:server');
 var http = require('http');
-var sockets = [];
-  
+
 /**
  * Get port from environment and store in Express.
  */
@@ -22,22 +22,29 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
-var io = require('socket.io')(server);
+io(server);
+// var io = require('socket.io')(server);
 
-io.on('connection', function(socket){
-  sockets.push(socket);
-  console.log('#%s socket connected', sockets.length);
-  //send a message
-  socket.on('chat message', function(data){
-    console.log(data);
-    io.emit('chat message', data);
-  });
-  // user disconnect 
-  socket.on('disconnect', function(data){
-    sockets.splice(sockets.indexOf(socket),1);
-    console.log('#%s socket disconnected', sockets.length);
-  });
-});
+// const room = io.of('/gameroom');
+
+// io.on('connection', function(socket){
+//   sockets.push(socket);
+//   console.log('#%s socket connected', sockets.length);
+//   //send a message
+//   socket.on('chat message', function(data){
+//     console.log(data);
+//     io.emit('chat message', data);
+//   });
+//   // user disconnect 
+//   socket.on('disconnect', function(data){
+//     sockets.splice(sockets.indexOf(socket),1);
+//     console.log('#%s socket disconnected', sockets.length);
+//   });
+// });
+
+// room.on('connection', function(socket) {
+//   console.log("Joined room");
+// });
 
 /**
  * Listen on provided port, on all network interfaces.

@@ -1,18 +1,25 @@
 <% include ./partials/header %>
+  <form action="/gameroom/leave/<%= id %>" method="POST">
+    <input type="hidden" name="roomId" value="<%= id %>">
+    <input type="submit" style="width:100px;background-color:black;color:white" value="LEAVE ROOM">
+  </form>
+  
 
-	<div class="container" style="position:fixed; left:30%; bottom:10%">
-        <button type="button" style="width:100px;background-color:black;color:white">START</button>
-        <button type="button" style="width:100px;background-color:black;color:white">PASS</button>
-        <button type="button" style="width:100px;background-color:black;color:white">UNO</button>
-        <button type="button" style="width:100px;background-color:black;color:white">DRAW</button>
-	</div>
+  <div class="container" style="position:fixed; left:30%; bottom:10%">
+    <button type="button" style="width:100px;background-color:black;color:white">START</button>
+    <button type="button" style="width:100px;background-color:black;color:white">PASS</button>
+    <button type="button" style="width:100px;background-color:black;color:white">UNO</button>
+    <button type="button" style="width:100px;background-color:black;color:white">DRAW</button>
+  </div>
 
-	<div class="chat-input" style="position:fixed; right:5%; bottom:30%">
-		<input type = "text" placeholder="Message...">
-		<button type="button" style="width:100px;background-color:black;color:white">SEND</button>
+  <div class="chat-input" style="position:fixed; right:5%; bottom:30%">
+    <input type = "text" placeholder="Message...">
+    <button type="button" style="width:100px;background-color:black;color:white">SEND</button>
+    <script>
+      $('body').css('background', 'url(https://i.stack.imgur.com/q02th.jpg)');
+    </script>
+  </div>
 
-  <script>
-   $('body').css('background', 'url(https://i.stack.imgur.com/q02th.jpg)');
-  </script>
-
+  <script src="/socket.io/socket.io.js"></script>  
+  <script src="/scripts/room.js"></script>
 <% include ./partials/footer %>

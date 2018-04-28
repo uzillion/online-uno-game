@@ -24,13 +24,20 @@ router.get('/join/:id', isLoggedIn, function(request, response) {
   });
 })
 
+router.post('/leave/:id', function(request, response) {
+  // console.log(request.body.roomId);
+  gameroom.removePlayer({userId: request.user.id, roomId: parseInt(request.params.id)});
+  response.redirect("/");
+});
+
 // /* GET game room. */
 // router.get('/', function(req, res, next) {
 //   res.render('gameRoom', {title: "GameRoom"});
 // });
 
 router.get('/:id',function(req, res, next) {
-    res.render('gameroom', {title: "Room"+req.params.id});
+    const room_id = req.params.id;
+    res.render('gameroom', {title: "Room "+room_id, id: room_id});
 });
 
 module.exports = router;
