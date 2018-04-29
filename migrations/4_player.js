@@ -21,6 +21,11 @@ module.exports = {
             key:'id'
           }
         },
+        turn_number: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          defaultValue: 0
+        },
         has_won: {
           type: Sequelize.BOOLEAN,
           allowNull: false,

@@ -2,9 +2,14 @@
 module.exports = (sequelize, DataTypes) => {
   var player = sequelize.define('player', {
     has_won: {
-      type: Sequelize.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
+    },
+    turn_number: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
     }
   },{
     classMethods: {

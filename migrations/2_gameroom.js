@@ -15,10 +15,15 @@ module.exports = {
           allowNull: false,
           defaultValue: 0
         },
-        locked: {
-          type: Sequelize.BOOLEAN,
+        current_turn: {
+          type: Sequelize.INTEGER,
           allowNull: false,
-          defaultValue: 'f'
+          defaultValue: 0
+        },
+        current_color: {
+          type: Sequeliz.STRING,
+          allowNull: true,
+          defaultValue: null
         }
       }
     );
