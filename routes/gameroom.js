@@ -14,17 +14,23 @@ router.post('/create', isLoggedIn, function(request, response) {
 });
 
 router.get('/join/:id', isLoggedIn, function(request, response) {
-  let room_id = request.params.id;
-  console.log("Join route hit : "+room_id);
-  gameroom.addPlayer({userId: request.user.id, roomId: room_id}, (player) => {
-    console.log("Player with user id "+player.user_id+" joined a room");
-    response.redirect('/gameroom/'+room_id);
-  }).catch((error) => {
-    response.redirect('/gameroom/'+room_id);
+  const room_id = request.params.id;
+  gameroom.getRoom(room_id, (room) => {
+    if(room.n_players < 4) {
+      gameroom.addPlayer({userId: request.user.id, roomId: room_id}, (player) => {
+        console.log("Player with user id "+player.user_id+" joined room "+ player.room_id);
+        response.redirect('/gameroom/'+room_id);
+      });
+    } else {
+      response.redirect('/?error=roomfull');
+    }
   });
-})
+  // .catch((error) => {
+  //   response.redirect('/gameroom/'+room_id);
+  // });
+});
 
-router.post('/leave/:id', function(request, response) {
+router.post('/leave/:id', isLoggedIn, function(request, response) {
   // console.log(request.body.roomId);
   gameroom.removePlayer({userId: request.user.id, roomId: parseInt(request.params.id)});
   response.redirect("/");
@@ -35,7 +41,7 @@ router.post('/leave/:id', function(request, response) {
 //   res.render('gameRoom', {title: "GameRoom"});
 // });
 
-router.get('/:id',function(req, res, next) {
+router.get('/:id', isLoggedIn, function(req, res, next) {
     const room_id = req.params.id;
     res.render('gameroom', {title: "Room "+room_id, id: room_id});
 });

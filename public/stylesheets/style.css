@@ -8,7 +8,7 @@ body {
   color: #00B7FF;
 } */
 
-#create_room {
+#create-room-button {
   position: absolute;
   z-index: 2;
   top: 20%;

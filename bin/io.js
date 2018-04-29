@@ -22,7 +22,9 @@ const socket = (server) => {
   });
 
   room.on('connection', function(socket) {
-    console.log("Joined room");
+    socket.on('room created', function(data) {
+      room.emit('add room button', data );
+    });
   });
 
 }

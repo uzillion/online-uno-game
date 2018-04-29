@@ -1,6 +1,11 @@
 <% include ./partials/header %>
 <div class="container">
   <!-- Page Heading -->
+  <% if(message == 'roomfull') { %>
+    <div class="alert alert-danger" role="alert">
+      Sorry, room is full.
+    </div>
+  <% } %>  
   <h1 class="my-4">Lobby</h1>
   <div class="row">
     <div class="col-lg-6 portfolio-item">
@@ -9,8 +14,8 @@
           <div class="card-body">
           <div>
               <h4 id="add-room" class="card-title title">Rooms <a href="#"><i class="fa fa-plus"></i></a></h4>
-              <form action="/gameroom/create" method="post">
-                <input id="create_room" type="submit" class="btn btn-success" value="Create">
+              <form id="create-room" action="/gameroom/create" method="post">
+                <input id="create-room-button" type="submit" class="btn btn-success" value="Create">
               </form>
           </div>
             <div class="table-responsive">
@@ -20,19 +25,12 @@
                       <th>Room Name</th><th>Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                      <td>Room 1</td><td><button type="button" class="btn btn-sm btn-primary">Join</button></td>
-                  </tr>
-                  <tr>
-                      <td>Room 2</td><td><button type="button" class="btn btn-sm btn-primary">Join</button></td>
-                  </tr>
-                  <tr>
-                      <td>Room 3</td><td><button type="button" class="btn btn-sm btn-primary">Join</button></td>
-                  </tr>
-                  <tr>
-                      <td>Room 4</td><td><button type="button" class="btn btn-sm btn-primary">Join</button></td>
-                  </tr>
+                <tbody id="active-rooms">
+                  <% rooms.forEach((room) => { %>
+                    <tr id=<%= room.id %>>
+                      <td>Room <%= room.id %></td><td><a class="btn btn-sm btn-primary" href="/gameroom/join/<%=room.id%>">Join</a></td>
+                    </tr>
+                  <% }) %>
                 </tbody>
               </table>
             </div>

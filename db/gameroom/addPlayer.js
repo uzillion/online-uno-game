@@ -9,15 +9,15 @@ const addPlayer = (playerObject, callback) => {
   const VALUES = [ playerObject.userId, playerObject.roomId];
 
   return database
-    .one( ADD_PLAYER_QUERY, VALUES )
+    .oneOrNone( ADD_PLAYER_QUERY, VALUES )
     .then((player) => {
       console.log(player);
       database.query(`UPDATE gameroom SET n_players=n_players+1 WHERE id=${playerObject.roomId}`);
       callback(player);
-    });
-    // .catch( error => {
-    //   console.log("Failed to add player");
-    //   console.log( "ERROR: ", error ) });
+    })
+    .catch( error => {
+      console.log("Failed to add player");
+      console.log( "ERROR: ", error ) });
 };
 
 module.exports = addPlayer;
