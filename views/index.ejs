@@ -51,21 +51,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                      <td>Jack</td><td>2000</td>
-                  </tr>
-                  <tr>
-                      <td>Jerry</td><td>1000</td>
-                  </tr>
-                  <tr>
-                      <td>Ben</td><td>500</td>
-                  </tr>
-                  <tr>
-                      <td>Ben</td><td>500</td>
-                  </tr>
-                  <tr>
-                      <td>Ben</td><td>500</td>
-                  </tr>
+                  <% scores.forEach((score) => { %>
+                    <tr>
+                        <td><%=score.username %></td><td><%= score.score %></td>
+                    </tr>
+                  <% }) %>
                 </tbody>
               </table>
             </div>

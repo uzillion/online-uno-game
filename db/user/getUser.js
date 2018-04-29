@@ -1,6 +1,8 @@
 const database = require('../index');
 
 const GET_USER_QUERY = `SELECT * FROM users
+  INNER JOIN score
+  ON users.id = score.user_id
   WHERE username=$1`;
 
 const getUser = (username, callback) => {
