@@ -10,6 +10,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    hand: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: {cards: []}
     }
   },{
     classMethods: {

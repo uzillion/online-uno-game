@@ -20,8 +20,13 @@ module.exports = {
           allowNull: false,
           defaultValue: 0
         },
-        current_color: {
-          type: Sequeliz.STRING,
+        current_card: {
+          type: Sequelize.JSON,
+          allowNull: true,
+          defaultValue: null
+        },
+        deck: {
+          type: Sequelize.JSON,
           allowNull: true,
           defaultValue: null
         }

@@ -1,11 +1,18 @@
 <% include ./partials/header %>
 <div class="container">
   <!-- Page Heading -->
-  <% if(message == 'roomfull') { %>
-    <div class="alert alert-danger" role="alert">
-      Sorry, room is full.
+  <% if(error.message) { %>
+    <div class="alert alert-danger center" role="alert">
+      <% if(error.message == 'roomFull') { %>
+        Sorry, room <%= error.room %> is full.
+      <% } else if(error.message == 'doesNotExist') {%>
+        Sorry, room <%= error.room %> does not exist any more.
+      <% } else if(error.message == 'unknownError') { %>
+        Sorry, an unknown error occurred.
+      <% } %>
     </div>
-  <% } %>  
+  <% } %>
+      
   <h1 class="my-4">Lobby</h1>
   <div class="row">
     <div class="col-lg-6 portfolio-item">

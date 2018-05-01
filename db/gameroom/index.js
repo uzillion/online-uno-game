@@ -3,5 +3,6 @@ module.exports = {
     getAllRooms: require('./getAllRooms'),
     getRoom: require('./getRoom'),
     addPlayer: require('./addPlayer'),
+    getPlayers: require('./getPlayers'),
     removePlayer: require('./removePlayer')
 };

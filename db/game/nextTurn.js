@@ -9,7 +9,7 @@ const NEXT_TURN_QUERY = `UPDATE gameroom
 const nextTurn = (room_id) => {
   const VALUE = room_id;
   database
-    .query(REVERSE_QUERY, VALUE);
+    .query(NEXT_TURN_QUERY, VALUE);
 };
 
 module.exports = nextTurn;

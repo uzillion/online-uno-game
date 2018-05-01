@@ -21,10 +21,14 @@ module.exports = {
             key:'id'
           }
         },
+        hand: {
+          type: Sequelize.JSON,
+          allowNull: true,
+          defaultValue: {cards: []}
+        },
         turn_number: {
           type: Sequelize.INTEGER,
-          allowNull: false,
-          defaultValue: 0
+          allowNull: false
         },
         has_won: {
           type: Sequelize.BOOLEAN,

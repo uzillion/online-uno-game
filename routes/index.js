@@ -5,11 +5,14 @@ const getScores = require('../db/user/getScores');
 
 /* GET home page. */
 router.get('/', function (request, response) {
-  const error = request.query.error;
-  console.log(error);
+  const room_error = { 
+    message: request.query.error,
+    room: request.query.id
+  };
+  console.log(room_error);
   getAllRooms(function(dbRooms) {
     getScores((dbScores) => {
-      response.render('index', {title: 'Lobby', rooms: dbRooms, scores: dbScores, message: error});
+      response.render('index', {title: 'Lobby', rooms: dbRooms, scores: dbScores, error: room_error});
     });
   });
 });
