@@ -1,15 +1,51 @@
 <% include ./partials/header %>
 
-	<div class="container" style="position:fixed; left:30%; bottom:10%">
+	<!-- draw and play deck -->
+	<div class="deck_container">
+		<img id="draw_deck" src="/images/card_back_alt.png">
+		<img id="play_deck" src="/images/wild_color_changer.png">
+	</div>
+
+	<!-- draw and play deck -->
+	<div class="my_deck">
+		<img src="/images/blue_0.png">
+		<img src="/images/green_1.png">
+		<img src="/images/red_2.png">
+		<img src="/images/yellow_3.png">
+		<img src="/images/wild_color_changer.png">
+		<img src="/images/wild_pick_four.png">
+		<img src="/images/yellow_4.png">
+	</div>
+
+	<!-- other players' deck -->
+	<div class="others_deck">
+		<div id="otherPlayer_1">
+			<img src="/images/card_back.png">
+			<p>Player 1: 2 cards</p>
+		</div>
+		<div id="otherPlayer_2">
+			<img src="/images/card_back.png">
+			<p>Player 2: 3 cards</p>
+		</div>
+		<div id="otherPlayer_3">
+			<img src="/images/card_back.png">
+			<p>Player 3: 1 cards</p>
+		</div>
+	</div>
+
+	<!-- button -->
+	<div class="container" style="position:fixed; left:30%; bottom:26%">
         <button type="button" style="width:100px;background-color:black;color:white">START</button>
         <button type="button" style="width:100px;background-color:black;color:white">PASS</button>
         <button type="button" style="width:100px;background-color:black;color:white">UNO</button>
+				<button type="button" style="width:100px;background-color:black;color:white">CATCH</button>
         <button type="button" style="width:100px;background-color:black;color:white">DRAW</button>
 	</div>
 
-	<div class="chat-input" style="position:fixed; right:5%; bottom:30%">
+	<div class="chat-input" style="position:fixed; right:0%; bottom:0%">
 		<input type = "text" placeholder="Message...">
-		<button type="button" style="width:100px;background-color:black;color:white">SEND</button>
+		<button type="button" style="width:90px;background-color:black;color:white;">SEND</button>
+	</div>
 
   <script>
    $('body').css('background', 'url(https://i.stack.imgur.com/q02th.jpg)');

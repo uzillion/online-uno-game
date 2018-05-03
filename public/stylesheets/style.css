@@ -133,3 +133,41 @@ form button {
 .row {
   height: inherit;
 }
+
+/* draw and play deck CSS style */
+.deck_container {
+  margin-top: 15%;
+  margin-left: 31%;
+}
+#play_deck {
+  margin-left: 250px;
+}
+
+/* my deck CSS style */
+.my_deck {
+  position: absolute;
+  margin-left: 15%;
+  bottom: 0%;
+}
+
+/* other players' CSS style */
+.others_deck {
+  position: absolute;
+  top: 8%;
+}
+#otherPlayer_1, #otherPlayer_2, #otherPlayer_3 {
+  float: left;
+}
+#otherPlayer_1 {
+  margin-left: 200px;
+}
+#otherPlayer_2 {
+  margin-left: 315px;
+}
+#otherPlayer_3 {
+  margin-left: 250px;
+}
+p {
+  color: white;
+  text-align: center;
+}
