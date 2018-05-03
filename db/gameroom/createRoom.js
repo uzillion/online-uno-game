@@ -1,7 +1,7 @@
 const database = require('../index');
 
 const CREATE_ROOM_QUERY = `INSERT INTO gameroom DEFAULT VALUES
-  RETURNING "id"`;
+  RETURNING "id", "n_players"`;
 
 const createRoom = (callback) => {
 

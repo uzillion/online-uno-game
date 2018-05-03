@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   var hand = sequelize.define('hand', {
     deck: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       defaultValue: 0
     }
   }, {

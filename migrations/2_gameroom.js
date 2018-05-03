@@ -15,10 +15,20 @@ module.exports = {
           allowNull: false,
           defaultValue: 0
         },
-        locked: {
-          type: Sequelize.BOOLEAN,
+        current_turn: {
+          type: Sequelize.INTEGER,
           allowNull: false,
-          defaultValue: 'f'
+          defaultValue: 0
+        },
+        current_card: {
+          type: Sequelize.JSON,
+          allowNull: true,
+          defaultValue: null
+        },
+        deck: {
+          type: Sequelize.JSON,
+          allowNull: true,
+          defaultValue: null
         }
       }
     );

@@ -10,6 +10,9 @@ const addUser = userObject => {
 
   return database
     .one( INSERT_USER_QUERY, VALUES )
+    .then((user) => {
+      database.query(`INSERT INTO score (user_id) VALUES(${user.id})`);
+    })
     .catch( error => console.log( "ERROR: ", error ) );
 };
 

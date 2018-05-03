@@ -8,7 +8,7 @@ body {
   color: #00B7FF;
 } */
 
-#create_room {
+#create-room-button {
   position: absolute;
   z-index: 2;
   top: 20%;
@@ -135,7 +135,7 @@ form button {
 }
 
 /* draw and play deck CSS style */
-.deck_container {
+#deck_container {
   margin-top: 15%;
   margin-left: 31%;
 }
@@ -144,14 +144,14 @@ form button {
 }
 
 /* my deck CSS style */
-.my_deck {
+#my_deck {
   position: absolute;
   margin-left: 15%;
   bottom: 0%;
 }
 
 /* other players' CSS style */
-.others_deck {
+#others_deck {
   position: absolute;
   top: 8%;
 }

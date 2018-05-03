@@ -1,6 +1,21 @@
 <% include ./partials/header %>
 <div class="container">
   <!-- Page Heading -->
+  <% if(error.message) { %>
+    <div class="alert alert-danger show fade center" id="divChild" >
+      <% if(error.message == 'roomFull') { %>
+        Sorry, room <%= error.room %> is full.
+      <% } else if(error.message == 'doesNotExist') {%>
+        Sorry, room <%= error.room %> does not exist any more.
+      <% } else if(error.message == 'unknownError') { %>
+        Sorry, an unknown error occurred.
+      <% } %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <% } %>
+      
   <h1 class="my-4">Lobby</h1>
   <div class="row">
     <div class="col-lg-6 portfolio-item">
@@ -9,8 +24,8 @@
           <div class="card-body">
           <div>
               <h4 id="add-room" class="card-title title">Rooms <a href="#"><i class="fa fa-plus"></i></a></h4>
-              <form action="/gameroom/create" method="post">
-                <input id="create_room" type="submit" class="btn btn-success" value="Create">
+              <form id="create-room" action="/gameroom/create" method="post">
+                <input id="create-room-button" type="submit" class="btn btn-success" value="Create">
               </form>
           </div>
             <div class="table-responsive">
@@ -20,19 +35,12 @@
                       <th>Room Name</th><th>Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                      <td>Room 1</td><td><button type="button" class="btn btn-sm btn-primary">Join</button></td>
-                  </tr>
-                  <tr>
-                      <td>Room 2</td><td><button type="button" class="btn btn-sm btn-primary">Join</button></td>
-                  </tr>
-                  <tr>
-                      <td>Room 3</td><td><button type="button" class="btn btn-sm btn-primary">Join</button></td>
-                  </tr>
-                  <tr>
-                      <td>Room 4</td><td><button type="button" class="btn btn-sm btn-primary">Join</button></td>
-                  </tr>
+                <tbody id="active-rooms">
+                  <% rooms.forEach((room) => { %>
+                    <tr id=<%= room.id %>>
+                      <td>Room <%= room.id %></td><td><a class="btn btn-sm btn-primary" href="/gameroom/join/<%=room.id%>">Join</a></td>
+                    </tr>
+                  <% }) %>
                 </tbody>
               </table>
             </div>
@@ -53,21 +61,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                      <td>Jack</td><td>2000</td>
-                  </tr>
-                  <tr>
-                      <td>Jerry</td><td>1000</td>
-                  </tr>
-                  <tr>
-                      <td>Ben</td><td>500</td>
-                  </tr>
-                  <tr>
-                      <td>Ben</td><td>500</td>
-                  </tr>
-                  <tr>
-                      <td>Ben</td><td>500</td>
-                  </tr>
+                  <% scores.forEach((score) => { %>
+                    <tr>
+                        <td><%=score.username %></td><td><%= score.score %></td>
+                    </tr>
+                  <% }) %>
                 </tbody>
               </table>
             </div>
@@ -94,24 +92,18 @@
           <div class="container" width = 200 height = 100 color="blue">
 
           </div>
-         <script src="/scripts/lobby_chat.js"></script>
-       <ul id="messages"></ul>
-         <form id="chatForm" action="">
-           <input id="m" placeholder="message"autocomplete="off"/>
-           <button id ='click'> Send
-           </button>
-         </form>
+					<ul id="messages"></ul>
+					<form id="chatForm" action="">
+						<input id="m" placeholder="message"autocomplete="off"/>
+						<button id ='click'> Send
+						</button>
+					</form>
         </div>
       </div>
     </div>
-    </div>
-  </div>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/scripts/create_room.js"></script>
-</body>
-</html>
-<!--
-    <h1>SFSU CSC667 PROJECT</h1>
-    <p>This will be the uno game developed by Team-G</p>
-  </body>
-</html>
+	</div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/scripts/lobby_chat.js"></script>
+<script src="/scripts/create_room.js"></script>
+<% include ./partials/footer %>
