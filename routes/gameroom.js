@@ -48,40 +48,44 @@ router.post('/leave/:id', isLoggedIn, function(request, response) {
   response.redirect("/");
 });
 
-router.post('/start/:id', isLoggedIn, function(request, response) {
-  const room_id = request.params.id;
-  game.startGame(room_id, deck, function(firstCard) {
-    gameroom.getPlayers(room_id, function(players) {
-      players.forEach(function(roomPlayer) {
-        player.drawCard(roomPlayer.user_id, room_id, 7);
-      });
-      response.status(200).json(firstCard);
-    });
-  });
-});
 
-router.post('/play/:id', isLoggedIn, function(request, response) {
-  const playingCard = request.body.card;
-  const room_id = request.params.id;
-  const user_id = request.user.id;
+
+//################## Replaced with socket signals ####################
+
+// router.post('/start/:id', isLoggedIn, function(request, response) {
+//   const room_id = request.params.id;
+//   game.startGame(room_id, deck, function(firstCard) {
+//     gameroom.getPlayers(room_id, function(players) {
+//       players.forEach(function(roomPlayer) {
+//         player.drawCard(roomPlayer.user_id, room_id, 7);
+//       });
+//       response.status(200).json(firstCard);
+//     });
+//   });
+// });
+
+// router.post('/play/:id', isLoggedIn, function(request, response) {
+  //   const playingCard = request.body.card;
+//   const room_id = request.params.id;
+//   const user_id = request.user.id;
   
-  validateCard(user_id, room_id, playingCard, function(result, error) {
-    if(result == true)
-      player.playCard(request.params.id, request.user.id, request.body.card);
-    else
-      response.redirect('/room_id?error='+error)
-  });
+//   validateCard(user_id, room_id, playingCard, function(result, error) {
+//     if(result == true)
+//       player.playCard(request.params.id, request.user.id, request.body.card);
+//     else
+//       response.redirect('/room_id?error='+error)
+//   });
 
-});
+// });
 
-router.post('/change-color/:id', isLoggedIn, function(request, response) {
-  game.changeColor(request.params.id, request.body.color);
-})
+// router.post('/change-color/:id', isLoggedIn, function(request, response) {
+//   game.changeColor(request.params.id, request.body.color);
+// })
 
 router.get('/:id', isLoggedIn, function(request, response, next) {
     const room_id = request.params.id;
     gameroom.getRoom(room_id, function(room) {
-      response.render('gameroom', {title: "Room "+room_id, room: room_id});
+      response.render('gameroom', {title: "Room "+room_id, id: room_id});
     })
 });
 

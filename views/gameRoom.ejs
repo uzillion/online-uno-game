@@ -1,9 +1,25 @@
 <% include ./partials/header %>
   <form action="/gameroom/leave/<%= id %>" method="POST">
     <input id="room-id" type="hidden" name="roomId" value="<%= id %>">
+    <input id="user-id" type="hidden" name="userId" value="<%= user.id %>">
     <input type="submit" style="width:100px;background-color:black;color:white" value="LEAVE ROOM">
   </form>
+  
+  <div id="p1"></div>
+  
+  <div id="p2"></div>
+  
+  <div id="p3"></div>
+  
+  <div id="p4"></div>
+  
+  <div id="turn-indicator"></div>
 
+  <div id="turn-number"></div>
+
+  <div id="current-card"></div>
+  
+  <div id="error"></div>
 
   <div class="container" style="position:fixed; left:30%; bottom:10%">
     <button id="start-button" style="width:100px;background-color:black;color:white">START</button>
