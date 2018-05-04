@@ -18,13 +18,9 @@ const drawCard = (user_id, room_id, num) => {
   return database
     .one(GET_DECK_QUERY, room_id)
     .then((data) => {
-      // console.log("====1=====");
       const deck = data.deck.deck;
-      // console.log(gameDeck.shift());
       return deck;
     }).then((deck)=>{
-      // console.log("====2=====");      
-      // console.log("DECK: "+JSON.stringify(deck[0]));
       const drawnCards = [];
       for(let i = 1; i<=num; i++) {
         drawnCards.push(deck.shift());
@@ -32,21 +28,13 @@ const drawCard = (user_id, room_id, num) => {
       database.query(UPDATE_DECK_QUERY, [{deck}, room_id]);
       return drawnCards;
     }).then((drawnCards)=> {
-      // console.log("====3=====");           
       database
         .one(GET_HAND_QUERY, [user_id, room_id])
         .then((data) => {
-          // console.log("====4=====");          
-          // console.log(data); 
           let cards = data.hand.cards;
           cards = cards.concat(drawnCards);
-          // cards.forEach((card)=> {
-            // console.log(user_id + " gets " + JSON.stringify(card));
-          // });       
-          // console.log(drawnCards);
           return cards;
         }).then((cards)=>{
-          // console.log("====5=====");
           database
             .query(UPDATE_HAND_QUERY, [{cards}, user_id, room_id]);
         });

@@ -30,6 +30,9 @@ const socket = (server) => {
 // ============================ Room Connections ============================
 
   room.on('connection', function(socket) {
+    // console.log("Socket id: "+socket.handshake.query.id);    
+    let socketRoomId = socket.handshake.query.id
+    socket.join(socket.handshake.query.id);    
     socket.on('room created', function(data) {
       room.emit('add room button', data );
     });
@@ -50,23 +53,23 @@ const socket = (server) => {
             game.startGame(dbRoom.id, deck, function(currentCard) {
               gameroom.getPlayers(dbRoom.id, function(players) {
                 players.forEach(function(roomPlayer) {
-                  player.drawCard(roomPlayer.user_id, dbRoom.id, 7);
+                  room.to(socketRoomId).emit('hand', {user_id: roomPlayer.user_id, turn_number: roomPlayer.turn_number, hand: roomPlayer.hand});
                 });
               });
-              room.emit('new current card', {current_card: currentCard});
+              room.to(socketRoomId).emit('new current card', {current_card: currentCard});
             });
           }
         });
-      })
-    });
+      });
+    })
 
     socket.on('play card', function(data) {
       validateCard(data.user_id, data.room_id, data.card, function(result, playError) {
         if(result == true) {
           player.playCard(data.room_id, data.user_id, data.card);
-          room.emit('new current card', {current_card: data.card});
+          room.to(socketRoomId).emit('new current card', {current_card: data.card});
           game.nextTurn(data.room_id, function(userId) {
-            room.emit('active turn', {user_id: userId});
+            room.to(socketRoomId).emit('active turn', {user_id: userId});
           });
         }
         else
@@ -76,7 +79,7 @@ const socket = (server) => {
 
     socket.on('change color', function(data) {
       game.changeColor(data.room_id, data.color);
-      room.emit('new current color', {color: data.color});
+      room.to(socketRoomId).emit('new current color', {color: data.color});
     });
 
   });

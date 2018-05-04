@@ -11,7 +11,7 @@
   <form action="/gameroom/leave/<%= id %>" method="POST">
     <input id="room-id" type="hidden" name="roomId" value="<%= id %>">
     <input id="user-id" type="hidden" name="userId" value="<%= user.id %>">
-    <input type="submit" style="width:100px;background-color:black;color:white" value="LEAVE ROOM">
+    <input id="leave-button" type="submit" style="width:100px;background-color:black;color:white" value="LEAVE ROOM">
   </form>
   
   <div id="p1"></div>
@@ -25,35 +25,20 @@
   <div id="turn-indicator"></div>
 
 	<!-- draw and play deck -->
-	<div id="deck_container">
-		<img id="draw_deck" src="/images/card_back_alt.png">
-		<img id="play_deck" src="/images/wild_color_changer.png">
+	<div id="deck-container">
 	</div>
 
 	<!-- draw and play deck -->
-	<div id="my_deck">
-		<img src="/images/blue_0.png">
-		<img src="/images/green_1.png">
-		<img src="/images/red_2.png">
-		<img src="/images/yellow_3.png">
-		<img src="/images/wild_color_changer.png">
-		<img src="/images/wild_pick_four.png">
-		<img src="/images/yellow_4.png">
+	<div id="my-hand">
 	</div>
 
 	<!-- other players' deck -->
-	<div id="others_deck">
-		<div id="otherPlayer_1">
-			<img src="/images/card_back.png">
-			<p>Player 1: 2 cards</p>
+	<div id="opponents">
+		<div id="opponent-1">
 		</div>
-		<div id="otherPlayer_2">
-			<img src="/images/card_back.png">
-			<p>Player 2: 3 cards</p>
+		<div id="opponent-2">
 		</div>
-		<div id="otherPlayer_3">
-			<img src="/images/card_back.png">
-			<p>Player 3: 1 cards</p>
+		<div id="opponent-3">
 		</div>
 	</div>
 

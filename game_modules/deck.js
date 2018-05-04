@@ -4,13 +4,8 @@ const player = require('../db/player');
 
 function Card(symbol, color, action) {
   this.symbol = symbol;
-  if(typeof color == 'function') {
-    this.action = color;
-    this.color = "";
-  } else {
-    this.color = color;
-    this.action = action;
-  }
+  this.color = color;
+  this.action = action;
 }
 
 const deck = [];
@@ -38,14 +33,14 @@ colors.forEach(function(color) {
     game.nextTurn(room_id); 
   }));
   // +2 Card
-  deck.push(new Card("+2", color, function(room_id) {
+  deck.push(new Card("d2", color, function(room_id) {
     player.nextPlayer(function(nextPlayer) {
       player.drawCard(nextPlayer.user_id, room_id, 2);
     });
   }));
 
   // +4 Card
-  deck.push(new Card("+4", function(room_id) {
+  deck.push(new Card("d4", "none", function(room_id) {
     player.nextPlayer(function(nextPlayer) {
       player.drawCard(nextPlayer.user_id, room_id, 4);
       game.nextTurn(room_id);
@@ -53,13 +48,13 @@ colors.forEach(function(color) {
   }));
 
   // Wildcard
-  deck.push(new Card("wildcard", function(game, newColor) {
+  deck.push(new Card("wildcard", "none", function(game, newColor) {
     game.changeColor(newColor);
   }));      
 });
 
-shuffle(deck);
-shuffle(deck);
-shuffle(deck);
+for(let i = 1 ; i <= 10 ; i++) {
+  shuffle(deck);
+}
 
 module.exports = deck;

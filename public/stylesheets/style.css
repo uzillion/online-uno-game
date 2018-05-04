@@ -4,6 +4,10 @@ body {
   font-family: 'Roboto Slab', sans-serif;
 }
 
+#leave-button {
+  position: relative;
+  z-index: 100;
+}
 /* a {
   color: #00B7FF;
 } */
@@ -135,36 +139,36 @@ form button {
 }
 
 /* draw and play deck CSS style */
-#deck_container {
+#deck-container {
   margin-top: 15%;
   margin-left: 31%;
 }
-#play_deck {
+#play-deck {
   margin-left: 250px;
 }
 
 /* my deck CSS style */
-#my_deck {
+#my-hand {
   position: absolute;
   margin-left: 15%;
   bottom: 0%;
 }
 
 /* other players' CSS style */
-#others_deck {
+#opponents {
   position: absolute;
   top: 8%;
 }
-#otherPlayer_1, #otherPlayer_2, #otherPlayer_3 {
+#opponent-1, #opponent-2, #opponent-3 {
   float: left;
 }
-#otherPlayer_1 {
+#opponent-1 {
   margin-left: 200px;
 }
-#otherPlayer_2 {
+#opponent-2 {
   margin-left: 315px;
 }
-#otherPlayer_3 {
+#opponent-3 {
   margin-left: 250px;
 }
 p {
