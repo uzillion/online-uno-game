@@ -4,7 +4,7 @@ $(function () {
    userName = document.getElementById('nameInput')
 
    numUsers = 0;
-    var socket = io('http://localhost:3000');
+    var socket = io('/lobby');
     $('#chatForm').submit(function(){
       console.log('message sent');
       socket.emit('chat message', {

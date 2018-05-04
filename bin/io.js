@@ -10,20 +10,24 @@ const socket = (server) => {
 
   var sockets = [];
 
+  const lobby = io.of('/lobby');
   const room = io.of('/gameroom');
 
   io.on('connection', function(socket){
     sockets.push(socket);
     console.log('#%s socket connected', sockets.length);
-    //send a message
-    socket.on('chat message', function(data){
-      console.log(data);
-      io.emit('chat message', data);
-    });
     // user disconnect 
     socket.on('disconnect', function(data){
       sockets.splice(sockets.indexOf(socket),1);
       console.log('#%s socket disconnected', sockets.length);
+    });
+  });
+
+  lobby.on('connection', function(socket){
+    //send a message
+    socket.on('chat message', function(data){
+      console.log(data);
+      lobby.emit('chat message', data);
     });
   });
 

@@ -41,13 +41,18 @@ $(function () {
         `);
       });
     } else {
-      if((data.turn_number - 1) > 0) {
-        $(`#opponent-${data.turn_number - 1}`).html(`
+      if($('#opponent-1').html() == "") {
+        $(`#opponent-1`).html(`
+          <img src="/images/card_back_alt.png">
+			    <p>Player ${data.turn_number}: ${data.hand.hand.length} cards</p>
+        `)  
+      } else if($('#opponent-2').html() == "") {
+        $(`#opponent-2`).html(`
           <img src="/images/card_back_alt.png">
 			    <p>Player ${data.turn_number}: ${data.hand.hand.length} cards</p>
         `)
       } else {
-        $(`#opponent-${data.turn_number}`).html(`
+        $(`#opponent-3`).html(`
           <img src="/images/card_back_alt.png">
 			    <p>Player ${data.turn_number}: ${data.hand.hand.length} cards</p>
         `)
