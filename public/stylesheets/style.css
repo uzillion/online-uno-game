@@ -175,3 +175,11 @@ p {
   color: white;
   text-align: center;
 }
+
+.error {
+  z-index: 100;
+}
+
+#turn-indicator {
+  color: red;
+}

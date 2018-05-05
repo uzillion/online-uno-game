@@ -5,7 +5,7 @@ const ADD_PLAYER_QUERY = `INSERT INTO player
   VALUES($1, $2, $3)
   RETURNING "user_id", "room_id"`;
 
-const addPlayer = (playerObject, callback) => {
+const addPlayer = (playerObject) => {
   const VALUES = [ playerObject.userId, playerObject.roomId, playerObject.turn];
 
   return database
@@ -13,7 +13,7 @@ const addPlayer = (playerObject, callback) => {
     .then((player) => {
       console.log(player);
       database.query(`UPDATE gameroom SET n_players=n_players+1 WHERE id=${playerObject.roomId}`);
-      callback(player);
+      return player;
     })
     .catch( error => {
       console.log("Failed to add player");

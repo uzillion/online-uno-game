@@ -22,7 +22,7 @@ module.exports = {
           }
         },
         hand: {
-          type: Sequelize.JSON,
+          type: Sequelize.JSONB,
           allowNull: true,
           defaultValue: {cards: []}
         },

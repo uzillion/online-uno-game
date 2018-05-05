@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 0
     },
     hand: {
-      type: DataTypes.JSON,
+      type: DataTypes.JSONB,
       allowNull: true,
       defaultValue: {cards: []}
     }

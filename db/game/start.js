@@ -11,11 +11,11 @@ const UPDATE_HAND_QUERY = `UPDATE player
   SET hand = $1
   WHERE user_id = $2 and room_id = $3`;
 
-const startGame = (room_id, deck, callback) => {
+const startGame = (room_id, deck) => {
   
   const firstCard = deck.shift();  
   
-  database.many(GET_PLAYERS_QUERY)
+  return database.many(GET_PLAYERS_QUERY)
   .then((players) => {
     let hand = []; 
     players.forEach((player) => {
@@ -27,9 +27,9 @@ const startGame = (room_id, deck, callback) => {
     });
   }).then(()=> {
     const VALUE = [{deck}, firstCard, room_id];
-    database.query(START_QUERY, VALUE)
-    .then(() => {console.log("Game Started!!"); callback(firstCard)});
-  });
+    return database.query(START_QUERY, VALUE)
+    .then(() => {console.log("Game Started!!"); return firstCard});
+  }).catch(error => {console.log("In start.js: "+error)});
 };
 
 module.exports = startGame;

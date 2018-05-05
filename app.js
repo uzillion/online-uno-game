@@ -46,7 +46,7 @@ app.use(passport.session());
 passport.use(new local({
   passReqToCallback: true
 }, (req, username, password, done) => {
-  getUser(username, (user,err)=> {
+  getUser(username, (user,err) => {
     // if (err) { return done(err); }
     if (!user) { console.log("!user"); return done(null, false); }
     return bcrypt.compare(req.body.password, user.password, function(err, res) {

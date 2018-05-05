@@ -1,11 +1,8 @@
 const shuffle = require('./shuffle');
-const game = require('../db/game');
-const player = require('../db/player');
 
-function Card(symbol, color, action) {
+function Card(symbol, color) {
   this.symbol = symbol;
   this.color = color;
-  this.action = action;
 }
 
 const deck = [];
@@ -24,33 +21,18 @@ colors.forEach(function(color) {
   deck.push(new Card("0", color));  
 
   // Reverse Card
-  deck.push(new Card("reverse", color, function(room_id) {
-    game.reverse(room_id);
-  }));  
+  deck.push(new Card("reverse", color));  
 
   // Skip Card
-  deck.push(new Card("skip", color, function(room_id) {
-    game.nextTurn(room_id); 
-  }));
+  deck.push(new Card("skip", color));
   // +2 Card
-  deck.push(new Card("d2", color, function(room_id) {
-    player.nextPlayer(function(nextPlayer) {
-      player.drawCard(nextPlayer.user_id, room_id, 2);
-    });
-  }));
+  deck.push(new Card("d2", color));
 
   // +4 Card
-  deck.push(new Card("d4", "none", function(room_id) {
-    player.nextPlayer(function(nextPlayer) {
-      player.drawCard(nextPlayer.user_id, room_id, 4);
-      game.nextTurn(room_id);
-    });
-  }));
+  deck.push(new Card("d4", "none"));
 
   // Wildcard
-  deck.push(new Card("wildcard", "none", function(game, newColor) {
-    game.changeColor(newColor);
-  }));      
+  deck.push(new Card("wildcard", "none"));      
 });
 
 for(let i = 1 ; i <= 10 ; i++) {

@@ -5,11 +5,10 @@ const GET_SCORES_QUERY = `SELECT username, score FROM score
   ON users.id = score.user_id
   ORDER BY score DESC;`;
 
-const getScores = (callback) => {
-  database
+const getScores = () => {
+  return database
     .any(GET_SCORES_QUERY)
-    .then(data => {return callback(data, null)})
-    .catch( error => {return callback(null, error); console.log(error)});
+    .catch( error => {console.log(error.stack)});
 }
 
 module.exports = getScores;

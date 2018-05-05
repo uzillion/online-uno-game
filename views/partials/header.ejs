@@ -33,7 +33,7 @@
 <li class="nav-item">
   <% if(user) { %>
     <a class="nav-link" href="#">Score: <%= user.score %></a>    
-    <a class="nav-link active" href="#"><%= user.username %></a>
+    <a class="nav-link active" href="/user/profile"><%= user.username %></a>
   <% } else { %>
     <a class="nav-link active" href="/user/login">Login</a>
   <% } %>

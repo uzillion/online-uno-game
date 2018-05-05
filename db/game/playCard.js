@@ -7,7 +7,8 @@ const PLAY_CARD_QUERY = `UPDATE gameroom
 const playCard = (room_id, card) => {
   const VALUE = [card, room_id];
   database
-    .query(PLAY_CARD_QUERY, VALUE);
+    .query(PLAY_CARD_QUERY, VALUE)
+    .catch(error => {console.log("In playCard.js: "+error)});
 };
 
 module.exports = playCard;

@@ -28,16 +28,18 @@ const drawCard = (user_id, room_id, num) => {
       database.query(UPDATE_DECK_QUERY, [{deck}, room_id]);
       return drawnCards;
     }).then((drawnCards)=> {
-      database
+      return database
         .one(GET_HAND_QUERY, [user_id, room_id])
         .then((data) => {
-          let cards = data.hand.cards;
-          cards = cards.concat(drawnCards);
-          return cards;
-        }).then((cards)=>{
-          database
-            .query(UPDATE_HAND_QUERY, [{cards}, user_id, room_id]);
-        });
+          console.log(data);
+          let hand = data.hand.hand;
+          hand = hand.concat(drawnCards);
+          return database
+            .query(UPDATE_HAND_QUERY, [{hand}, user_id, room_id])
+            .then(() => {
+              console.log(num+" cards drawn");
+              return drawnCards; });
+        }).catch(error => {console.log("In drawCard.js: "+error.stack)});
     });
 };
 

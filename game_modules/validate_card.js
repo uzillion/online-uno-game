@@ -3,11 +3,12 @@ const getRoom = require('../db/gameroom/getRoom');
 const getPlayer = require('../db/gameroom/getPlayer');
 
 const validate_card = (user_id, room_id, card, callback) => {
-  getRoom(room_id, (room) => {
-    getPlayer(user_id, room_id, (player) => {
+  getRoom(room_id).then((room) => {
+    getPlayer(user_id, room_id).then((player) => {
+      console.log("current_card: "+JSON.stringify(room.current_card));
+      console.log("card: "+JSON.stringify(card));
       if(card.symbol != 'wildcard') {
         if(room.current_turn == player.turn_number) {
-          console.log("current_card: "+room.current_card.symbol);
           if(card.color == room.current_card.color || card.symbol == room.current_card.symbol) {
             callback(true);
           } else {

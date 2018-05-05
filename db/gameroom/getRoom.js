@@ -3,12 +3,11 @@ const database = require('../index');
 const GET_ROOM_QUERY = `SELECT * FROM gameroom
 WHERE id=$1`;
 
-const getRoom = (ID, callback) => {
+const getRoom = (ID) => {
   const VALUE = ID;
-  database
+  return database
     .oneOrNone(GET_ROOM_QUERY, VALUE)
-    .then((data) => {callback(data)})
-    .catch( error => {return callback(error); console.log( "Could not get rooms: ", error)});
+    .catch( error => {console.log( "Could not get rooms: ", error.stack)});
 }
 
 module.exports = getRoom;

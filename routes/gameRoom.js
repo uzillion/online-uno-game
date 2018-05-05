@@ -10,8 +10,8 @@ const player = require('../db/player');
 const isLoggedIn = require('../middleware/isLoggedIn');
 
 router.post('/create', isLoggedIn, function(request, response) {
-  gameroom.createRoom((room) => {
-    gameroom.addPlayer({userId: request.user.id, roomId: room.id, turn: room.n_players+1}, (player) => {
+  gameroom.createRoom().then((room) => {
+    gameroom.addPlayer({userId: request.user.id, roomId: room.id, turn: room.n_players+1}).then((player) => {
       console.log("Player with user id "+player.user_id+" joined a room");
       response.redirect('/gameroom/'+room.id);
     });
@@ -20,14 +20,21 @@ router.post('/create', isLoggedIn, function(request, response) {
 
 router.get('/join/:id', isLoggedIn, function(request, response) {
   const room_id = request.params.id;
-  gameroom.getRoom(room_id, (room) => {
+  gameroom.getRoom(room_id).then((room) => {
     console.log(room);
-    if(room.n_players == null) {
+    if(room == null) {
       response.redirect('/?error=doesNotExist&id='+room_id);      
     }else if(room.n_players < 4) {
-      gameroom.addPlayer({userId: request.user.id, roomId: room_id, turn: room.n_players+1}, (player) => {
-        console.log("Player with user id "+player.user_id+" joined room "+ player.room_id);
-        response.redirect('/gameroom/'+room_id);
+      gameroom.getPlayers(room_id).then((players) => {
+        console.log(players);
+        if(players.findIndex(x => x.user_id == request.user.id) == -1) {
+          gameroom.addPlayer({userId: request.user.id, roomId: room_id, turn: room.n_players+1}).then((player) => {
+            console.log("Player with user id "+player.user_id+" joined room "+ player.room_id);
+            response.redirect('/gameroom/'+room_id);
+          });
+        } else {
+          response.redirect('/gameroom/'+room_id);
+        }
       });
     } 
     else if(room.n_players == 4) {
@@ -84,7 +91,7 @@ router.post('/leave/:id', isLoggedIn, function(request, response) {
 
 router.get('/:id', isLoggedIn, function(request, response, next) {
     const room_id = request.params.id;
-    gameroom.getRoom(room_id, function(room) {
+    gameroom.getRoom(room_id).then((room) => {
       response.render('gameroom', {title: "Room "+room_id, id: room_id});
     })
 });

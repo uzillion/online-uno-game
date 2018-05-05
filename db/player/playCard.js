@@ -12,19 +12,24 @@ const UPDATE_CURRENT_CARD_QUERY = `UPDATE gameroom
   WHERE id = $2`;
 
 const playCard = (room_id, user_id, playedCard) => {
-  database
+  return database
     .one(GET_HAND_QUERY, [user_id, room_id])
-    .then((hand) => {
-      // console.log(hand.hand);
-      let cards = hand.hand.cards;
-      let index = cards.findIndex(x => x.symbol == playCard.symbol && x.color == playedCard.color);
-      let current_card = cards.splice(index, 1);
-      database.query(UPDATE_CURRENT_CARD_QUERY, [current_card[0], room_id]);
-      return cards;
-    })
-    .then((cards) => {
-      database.query(UPDATE_HAND_QUERY, [{cards}, user_id, room_id])
-    });
+    .then((dbHand) => {
+      // console.log(playedCard);
+      let hand = dbHand.hand.hand;
+      // console.log(hand);
+      let index = hand.findIndex(x => x.symbol == playedCard.symbol && x.color == playedCard.color);
+      console.log(hand[index]);
+      let current_card = hand.splice(index, 1);
+      // console.log("spliced: "+JSON.stringify(current_card));
+      database.query(UPDATE_CURRENT_CARD_QUERY, [current_card[0], room_id])
+        .then(() => {
+          database.query(UPDATE_HAND_QUERY, [{hand}, user_id, room_id])
+          .catch(error => {console.log("In playCard.js: "+error.stack)});
+        }).catch(error => {console.log("In playCard.js: "+error.stack)});
+      return current_card[0];
+    }).catch(error => {console.log("In playCard.js: "+error.stack)});
+    
 };
 
 module.exports = playCard;

@@ -10,8 +10,8 @@ router.get('/', function (request, response) {
     room: request.query.id
   };
   console.log(room_error);
-  getAllRooms(function(dbRooms) {
-    getScores((dbScores) => {
+  getAllRooms().then((dbRooms) => {
+    getScores().then((dbScores) => {
       response.render('index', {title: 'Lobby', rooms: dbRooms, scores: dbScores, error: room_error});
     });
   });
