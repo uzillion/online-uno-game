@@ -46,7 +46,9 @@ const mainSocket = (server) => {
               socket.emit('hand', {user_id: roomPlayer.user_id, turn_number: roomPlayer.turn_number, hand: roomPlayer.hand});
             });
             socket.emit('new current card', {current_card: dbRoom.current_card});
-            socket.emit('change turn', {turn_number: dbRoom.current_turn});
+            gameroom.getPlayerByTurn(dbRoom.current_turn, data.room_id).then(playerData => {
+              room.to(socketRoomId).emit('change turn', {username: playerData.username});
+            });
           });
         }
       });
@@ -69,11 +71,14 @@ const mainSocket = (server) => {
             game.startGame(dbRoom.id, deck).then((currentCard) => {
               gameroom.getPlayers(dbRoom.id).then((players) => {
                 players.forEach(function(roomPlayer) {
-                  room.to(socketRoomId).emit('hand', {user_id: roomPlayer.user_id, turn_number: roomPlayer.turn_number, hand: roomPlayer.hand});
+                  room.to(socketRoomId).emit('hand', {username: roomPlayer.username, user_id: roomPlayer.user_id,
+                    turn_number: roomPlayer.turn_number, hand: roomPlayer.hand});
+                });
+                gameroom.getPlayerByTurn(1, data.room_id).then(playerData => {
+                  room.to(socketRoomId).emit('change turn', {username: playerData.username});
                 });
               });
               room.to(socketRoomId).emit('new current card', {current_card: currentCard});
-              room.to(socketRoomId).emit('change turn', {turn_number: 1});
               room.to(socketRoomId).emit('game started');
             });
           }
@@ -96,7 +101,9 @@ const mainSocket = (server) => {
     socket.on('pass turn', function(data) {
       game.nextTurn(data.room_id).then((newCurrentTurn) => {
         console.log(newCurrentTurn);
-        room.to(socketRoomId).emit('change turn', {turn_number: newCurrentTurn.current_turn});
+        gameroom.getPlayerByTurn(newCurrentTurn.current_turn, data.room_id).then(playerData => {
+          room.to(socketRoomId).emit('change turn', {username: playerData.username});
+        });
       });
     });
 
@@ -112,7 +119,7 @@ const mainSocket = (server) => {
               if(playedCard.symbol != 'wildcard') {
                 room.to(socketRoomId).emit('new current card', {current_card: data.card});
                 console.log(cardFunc[playedCard.symbol].toString());
-                cardFunc[playedCard.symbol](data.room_id).then((playData) => {
+                cardFunc[playedCard.symbol](data.room_id, data.user_id).then((playData) => {
                   if(playedCard.symbol == "d2" || playedCard.symbol == "d4") {
                     console.log("Checking room id: "+data.room_id);
                     return player.nextPlayer(data.room_id).then((nextPlayer) => {
@@ -122,7 +129,9 @@ const mainSocket = (server) => {
                   }
                 }).then(() => {
                   game.nextTurn(data.room_id).then((nextTurnNumber) => {
-                    room.to(socketRoomId).emit('change turn', {turn_number: nextTurnNumber.current_turn});
+                    gameroom.getPlayerByTurn(nextTurnNumber.current_turn, data.room_id).then(playerData => {
+                      room.to(socketRoomId).emit('change turn', {username: playerData.username});
+                    });
                   });
                 });
               } else {
@@ -132,7 +141,9 @@ const mainSocket = (server) => {
               room.to(socketRoomId).emit('new current card', {current_card: data.card});
               game.nextTurn(data.room_id).then((nextTurnNumber) => {
                 console.log(nextTurnNumber);
-                room.to(socketRoomId).emit('change turn', {turn_number: nextTurnNumber.current_turn});
+                gameroom.getPlayerByTurn(nextTurnNumber.current_turn, data.room_id).then(playerData => {
+                  room.to(socketRoomId).emit('change turn', {username: playerData.username});
+                });
               });
             }
             room.to(socketRoomId).emit('remove card', {user_id: data.user_id, card: data.card});

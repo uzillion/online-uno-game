@@ -4,6 +4,7 @@ module.exports = {
     getRoom: require('./getRoom'),
     addPlayer: require('./addPlayer'),
     getPlayer: require('./getPlayer'),
+    getPlayerByTurn: require('./getPlayerByTurn'),
     getPlayers: require('./getPlayers'),
     removePlayer: require('./removePlayer')
 };

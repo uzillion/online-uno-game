@@ -140,7 +140,7 @@ form button {
 
 /* draw and play deck CSS style */
 #deck-container {
-  margin-top: 15%;
+  margin-top: 13%;
   margin-left: 31%;
 }
 #play-deck {
@@ -153,12 +153,44 @@ form button {
   margin-left: 15%;
   bottom: 0%;
 }
+#my-hand img:hover {
+  z-index: 1;
+}
+/* #my-hand img:nth-child(2) {
+  position: absolute;
+  left: 60px;
+}
+#my-hand img:nth-child(3) {
+  position: absolute;
+  left: 120px;
+}
+#my-hand img:nth-child(4) {
+  position: absolute;
+  left: 180px;
+}
+#my-hand img:nth-child(5) {
+  position: absolute;
+  left: 240px;
+}
+#my-hand img:nth-child(6) {
+  position: absolute;
+  left: 300px;
+}
+#my-hand img:nth-child(7) {
+  position: absolute;
+  left: 360px;
+}
+#my-hand img:nth-child(8) {
+  position: absolute;
+  left: 420px;
+} */ */
 
 /* other players' CSS style */
 #opponents {
   position: absolute;
   top: 8%;
 }
+
 #opponent-1, #opponent-2, #opponent-3 {
   float: left;
 }
@@ -176,8 +208,11 @@ p {
   text-align: center;
 }
 
-.error {
-  z-index: 100;
+.alert {
+  z-index: 1;
+  width: 65%;
+  margin-left: 15%;
+  margin-right: auto;
 }
 
 #turn-indicator {

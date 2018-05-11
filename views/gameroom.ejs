@@ -9,7 +9,7 @@
 	</style>
 
 
-  <form action="/gameroom/leave/<%= id %>" method="POST">
+	<form action="/gameroom/leave/<%= id %>" method="POST">
     <input id="room-id" type="hidden" name="roomId" value="<%= id %>">
     <input id="user-id" type="hidden" name="userId" value="<%= user.id %>">
     <input id="leave-button" type="submit" style="width:100px;background-color:black;color:white" value="LEAVE ROOM">
@@ -18,14 +18,12 @@
   <div id="turn-indicator"></div>
 
 	<!-- draw and play deck -->
-	<div id="deck-container">
-	</div>
+	<div id="deck-container"></div>
 
 	<div id="error"></div>
 
 	<!-- draw and play deck -->
-	<div id="my-hand">
-	</div>
+	<div id="my-hand"></div>
 
 	<!-- other players' deck -->
 	<div id="opponents">
