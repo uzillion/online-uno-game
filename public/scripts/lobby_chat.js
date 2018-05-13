@@ -6,7 +6,7 @@ $(function () {
    numUsers = 0;
     var socket = io('/lobby');
     $('#chatForm').submit(function(){
-      console.log('message sent');
+      // console.log('message sent');
       socket.emit('chat message', {
       message: message.value,
       name: userName.value

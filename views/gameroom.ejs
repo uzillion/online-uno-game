@@ -5,46 +5,81 @@
 			background: url(https://i.stack.imgur.com/q02th.jpg);
 			background-size: 100%;
 			background-repeat: no-repeat;
+			/* overflow: hidden; */
 		}
 	</style>
+	<div class="row" id='main-container'>
 
+		<div class="col-9">
+				<!-- other players' deck -->
+			<div class="row" id="opponents">
+				<div class="col-4 center" id="opponent-1"></div>
+				<div class="col-4 center" id="opponent-2"></div>
+				<div class="col-4 center" id="opponent-3"></div>
+			</div>
+			
+			<div class="row" id="decks">
+				<div class="col-2"></div>
+				<div id="draw-deck" class="col-3">
+					<img class="mx-auto d-block" src="/images/card_back_alt.png">
+				</div>
+				<div class="col-2" id="turn-indicator"></div>
+				<div id="play-deck" class="col-3 col-md-offset-3"></div>
+				<div class="col-2"></div>				
+			</div>
 
-	<form action="/gameroom/leave/<%= id %>" method="POST">
-    <input id="room-id" type="hidden" name="roomId" value="<%= id %>">
-    <input id="user-id" type="hidden" name="userId" value="<%= user.id %>">
-    <input id="leave-button" type="submit" style="width:100px;background-color:black;color:white" value="LEAVE ROOM">
-  </form>
-  
-  <div id="turn-indicator"></div>
+			<div class="row">
+				<!-- <div class="col-4"></div> -->
+				<div class="col-12 mx-auto">
+					<div class="text-center" id="error"></div>
+				</div> 
+			</div>
+	
+			<!-- button -->
+			<div class="row">
+				<!-- <div class="col-2"></div> -->
+				<div class="col-12 mx-auto" id="buttons">
+					<div class="text-center">
+						<input type="submit" id="start-button" style="background-color:black;color:white" value="START">
+						<input type="submit" id="pass-turn" style="background-color:black;color:white" value="PASS">
+						<input type="submit" id="uno" style="background-color:black;color:white" value="UNO">
+						<input type="submit" id="draw-card" style="background-color:black;color:white" value="DRAW">
+					</div>
+				</div>
+			</div>
+			<div id="message"></div>
+			<!-- draw and play deck -->
+			<div class="row">
+				<!-- <div clas></div> -->
+				<div class="col-8 mx-auto">
+					<div class="text-center">
+						<div id="my-hand"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+		<div class="col-3">
+			<div class="row">
+				<div class="col-6"></div>
+				<form class="col-4" action="/gameroom/leave/<%= id %>" method="POST">
+					<input id="room-id" type="hidden" name="roomId" value="<%= id %>">
+					<input id="user-id" type="hidden" name="userId" value="<%= user.id %>">
+					<input id="leave-button" type="submit" style="background-color:black;color:white" value="LEAVE ROOM">
+				</form>
+			</div>
+			<div class="row">
+				<div class="chat-input" style="position:fixed; right:0%; bottom:0%">
+					<input type = "text" placeholder="Message...">
+					<button type="button" style="width:90px;background-color:black;color:white;">SEND</button>
+				</div>
+			</div>
+		</div>
 
-	<!-- draw and play deck -->
-	<div id="deck-container"></div>
-
-	<div id="error"></div>
-
-	<!-- draw and play deck -->
-	<div id="my-hand"></div>
-
-	<!-- other players' deck -->
-	<div id="opponents">
-		<div id="opponent-1"></div>
-		<div id="opponent-2"></div>
-		<div id="opponent-3"></div>
 	</div>
+		
 
-	<!-- button -->
-	<div class="container" style="position:fixed; left:30%; bottom:26%">
-			<button id="start-button" style="width:100px;background-color:black;color:white">START</button>
-			<button id="pass-turn" style="width:100px;background-color:black;color:white">PASS</button>
-			<button type="button" style="width:100px;background-color:black;color:white">UNO</button>
-			<button id="draw-card" style="width:100px;background-color:black;color:white">DRAW</button>
+	  <script src="/socket.io/socket.io.js"></script>  
+		<script src="/scripts/room.js"></script>
 	</div>
-
-	<div class="chat-input" style="position:fixed; right:0%; bottom:0%">
-		<input type = "text" placeholder="Message...">
-		<button type="button" style="width:90px;background-color:black;color:white;">SEND</button>
-	</div>
-
-  <script src="/socket.io/socket.io.js"></script>  
-  <script src="/scripts/room.js"></script>
 <% include ./partials/footer %>

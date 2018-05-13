@@ -9,7 +9,7 @@ router.get('/', function (request, response) {
     message: request.query.error,
     room: request.query.id
   };
-  console.log(room_error);
+  // console.log(room_error);
   getAllRooms().then((dbRooms) => {
     getScores().then((dbScores) => {
       response.render('index', {title: 'Lobby', rooms: dbRooms, scores: dbScores, error: room_error});

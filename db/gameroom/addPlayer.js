@@ -11,7 +11,7 @@ const addPlayer = (playerObject) => {
   return database
     .oneOrNone( ADD_PLAYER_QUERY, VALUES )
     .then((player) => {
-      console.log(player);
+      // console.log(player);
       database.query(`UPDATE gameroom SET n_players=n_players+1 WHERE id=${playerObject.roomId}`);
       return player;
     })

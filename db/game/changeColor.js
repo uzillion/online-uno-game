@@ -8,7 +8,7 @@ const UPDATE_CURRENT_CARD_QUERY = `UPDATE gameroom
   WHERE id = $2`;
 
 const changeColor = (room_id, newColor) => {
-    console.log("New Color: "+newColor);
+    // console.log("New Color: "+newColor);
     return database.query(UPDATE_CURRENT_CARD_QUERY, [{symbol: "", color: newColor}, room_id])
     .then(()=>{console.log("Done changing color");})
     .catch(error => {console.log("In changeColor.js: "+error)});

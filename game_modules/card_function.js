@@ -5,13 +5,13 @@ const getPlayer = require('../db/gameroom/getPlayer');
 const card_functions = {
   d2: (room_id) => {
         return player.nextPlayer(room_id).then((nextPlayer) => {
-          console.log("In d2: "+JSON.stringify(nextPlayer));
+          // console.log("In d2: "+JSON.stringify(nextPlayer));
           return player.drawCard(nextPlayer.user_id, room_id, 2);
         });
       },
   d4: (room_id) => {
         return player.nextPlayer(room_id).then((nextPlayer) => {
-          console.log("In d2: "+JSON.stringify(nextPlayer));
+          // console.log("In d2: "+JSON.stringify(nextPlayer));
           return player.drawCard(nextPlayer.user_id, room_id, 4);
         });
       },

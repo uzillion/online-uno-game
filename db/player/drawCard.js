@@ -31,7 +31,7 @@ const drawCard = (user_id, room_id, num) => {
       return database
         .one(GET_HAND_QUERY, [user_id, room_id])
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           let hand = data.hand.hand;
           hand = hand.concat(drawnCards);
           return database

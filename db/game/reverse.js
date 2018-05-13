@@ -3,7 +3,7 @@ const database = require('../index');
 const REVERSE_QUERY = `UPDATE player 
   SET turn_number = CASE WHEN n_players - turn_number > 0
   THEN n_players - turn_number
-  ELSE 3 END
+  ELSE n_players END
   FROM gameroom 
   WHERE gameroom.id = player.room_id
   AND room_id = $1`;
