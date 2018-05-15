@@ -64,23 +64,23 @@ server.on('listening', onListening);
 //     numUsers = data.numUsers;
 //     log(message);
 // }
-function setUsername () {
-    username = cleanInput($usernameInput.val().trim());
+// function setUsername () {
+//     username = cleanInput($usernameInput.val().trim());
 
-    // If the username is valid
-    if (username) {
-      // $loginPage.fadeOut();
-      // $chatPage.show();
-      // $loginPage.off('click');
-      // $currentInput = $inputMessage.focus();
+//     // If the username is valid
+//     if (username) {
+//       // $loginPage.fadeOut();
+//       // $chatPage.show();
+//       // $loginPage.off('click');
+//       // $currentInput = $inputMessage.focus();
 
-      // Tell the server your username
-      socket.emit('add user', username);
-    }
-    else{
-      username = "guest"+ numUsers;
-    }
-  }
+//       // Tell the server your username
+//       socket.emit('add user', username);
+//     }
+//     else{
+//       username = "guest"+ numUsers;
+//     }
+//   }
 /**
  * Normalize a port into a number, string, or false.
  */

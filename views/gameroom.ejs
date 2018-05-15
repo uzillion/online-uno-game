@@ -3,10 +3,21 @@
 	<style>
 		body {
 			background: url(https://i.stack.imgur.com/q02th.jpg);
-			background-size: 100%;
+			background-size: fill;
 			background-repeat: no-repeat;
-			/* overflow: hidden; */
+			overflow-x: hidden;
 		}
+		
+		.input-group.mb-3 {
+			width: 90%;
+		}
+
+		#messages {
+			width: 90%;
+			height: 300px ;
+			background-color: rgba(255,255,255,0.8);
+		}
+
 	</style>
 	<div class="row" id='main-container'>
 
@@ -65,21 +76,25 @@
 				<form class="col-4" action="/gameroom/leave/<%= id %>" method="POST">
 					<input id="room-id" type="hidden" name="roomId" value="<%= id %>">
 					<input id="user-id" type="hidden" name="userId" value="<%= user.id %>">
+					<input id="username" type="hidden" name="username" value="<%= user.username %>">
 					<input id="leave-button" type="submit" style="background-color:black;color:white" value="LEAVE ROOM">
 				</form>
 			</div>
-			<div class="row">
-				<div class="chat-input" style="position:fixed; right:0%; bottom:0%">
-					<input type = "text" placeholder="Message...">
-					<button type="button" style="width:90px;background-color:black;color:white;">SEND</button>
-				</div>
+			<div class="row" style="margin-top: 30%">
+					<ul id="messages"></ul>
+          <div class="input-group mb-3">
+              <input type="text" id="chat-message" class="form-control" placeholder="Type message here..." autocomplete="off"/>        
+              <div class="input-group-append">
+                <button id="send-button" class="btn btn-primary" type="button">Send</button>
+              </div>
+            </div>
 			</div>
 		</div>
 
 	</div>
 		
-
-	  <script src="/socket.io/socket.io.js"></script>  
-		<script src="/scripts/room.js"></script>
-	</div>
+	<script src="/socket.io/socket.io.js"></script>  
+	<script src="/scripts/room_chat.js"></script>
+	<script src="/scripts/room.js"></script>
+</div>
 <% include ./partials/footer %>

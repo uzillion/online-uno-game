@@ -27,7 +27,7 @@ const mainSocket = (server) => {
     //send a message
     socket.on('chat message', function(data){
       // console.log(data);
-      lobby.emit('chat message', data);
+      lobby.emit('message recieved', data);
     });
   });
 
@@ -44,6 +44,9 @@ const mainSocket = (server) => {
       });
     }
 
+    socket.on('chat message', function(data) {
+      room.to(socketRoomId).emit('message recieved', data);
+    });
     // console.log("Socket id: "+socket.handshake.query.id);      
     socket.on('joined room', function(data) {
       gameroom.getRoom(data.room_id).then((dbRoom) => {
