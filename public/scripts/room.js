@@ -18,8 +18,9 @@ $(function () {
 `);
 
   // $('#play-card').hide();
-  roomId = parseInt($('#room-id').val());
-  userId = parseInt($('#user-id').val());
+  let roomId = parseInt($('#room-id').val());
+  let userId = parseInt($('#user-id').val());
+  let username = $('#username').val();
 
   $('#opponents div').hover((event) => {
     // console.log(event.target.id);
@@ -53,7 +54,7 @@ $(function () {
       symbol: card[1],
       color: card[0]
     }
-    socket.emit('play card', {user_id: userId, room_id: roomId, card: selectedCard});
+    socket.emit('play card', {username: username, user_id: userId, room_id: roomId, card: selectedCard});
     // console.log(event.target.id);
     // $(`#${event.target.id}`).remove();
     // console.log(selectedCard);
@@ -117,7 +118,7 @@ $(function () {
       let spaces = 0;
       // $('#my-hand').html(`<h5 style="color: red">Player ${data.turn_number}</h5>`);
       $('#my-hand').html('');
-      console.log(JSON.stringify(data.hand));
+      // console.log(JSON.stringify(data.hand));
       data.hand.hand.forEach((card) => {
         $('#my-hand').append(`
           <img style="position: absolute; left: ${spaces}px" id="${card.color}_${card.symbol}" src="/images/${card.color}_${card.symbol}.png">
@@ -209,8 +210,25 @@ $(function () {
     }  
   });
 
-  socket.on('hello', function() {
-    console.log("Awesome stuff");
+  socket.on('won', function(data) {
+    let name;
+    let score;
+    if(data.user_id == userId) {
+      name = "You";
+      score = "Score: " + data.score;
+    } else {
+      name = data.username
+      score = "";
+    }
+    $('#game-area').html(`<div id="message" style="position: absolute; left: 30%; top:40%; width:50%;">
+        <div class="alert alert-success center" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          ${name} won! ${score}
+        </div>
+      </div>
+    `)
   })
   //============================================================
   

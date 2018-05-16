@@ -3,5 +3,6 @@ module.exports = {
   deck: require('./deck'),
   shuffle:  require('./shuffle'),
   validateCard: require('./validate_card'),
-  validateTurn: require('./validate_turn')
+  validateTurn: require('./validate_turn'),
+  calcScore: require('./calc_score')
 };

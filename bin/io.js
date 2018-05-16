@@ -149,12 +149,20 @@ const mainSocket = (server) => {
               });
             }
             room.to(socketRoomId).emit('remove card', {user_id: data.user_id, card: data.card});
-            gameroom.getPlayer(data.user_id, data.room_id).then((player) => {
+            gameroom.getPlayer(data.user_id, data.room_id).then((dbPlayer) => {
               // players.forEach(function(roomPlayer) {
-                // console.log(JSON.stringify(player));
-                socket.emit('hand', {user_id: player.user_id, turn_number: player.turn_number, hand: player.hand});
+                // console.log(JSON.stringify(dbPlayer));
+              if(dbPlayer.hand.hand.length > 0) {
+                socket.emit('hand', {user_id: dbPlayer.user_id, turn_number: dbPlayer.turn_number, hand: dbPlayer.hand});
+              } else {
+                gameMods.calcScore(data.room_id).then((calcedScore) => {
+                  player.updateScore(dbPlayer.user_id, calcedScore).then(() => {
+                    room.to(socketRoomId).emit('won', {user_id: dbPlayer.user_id, username: data.username, score: calcedScore});
+                  });
+                });
+              }
             });
-            // player.playCard(data.room_id, data.user_id, data.card);
+            // dbPlayer.playCard(data.room_id, data.user_id, data.card);
           });
         } else {
           console.log(playError);

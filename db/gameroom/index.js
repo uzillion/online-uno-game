@@ -6,5 +6,6 @@ module.exports = {
     getPlayer: require('./getPlayer'),
     getPlayerByTurn: require('./getPlayerByTurn'),
     getPlayers: require('./getPlayers'),
-    removePlayer: require('./removePlayer')
+    removePlayer: require('./removePlayer'),
+    getHands: require('./getHands.js')
 };
