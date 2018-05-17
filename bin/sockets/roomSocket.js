@@ -1,42 +1,15 @@
-const gameroom = require('../db/gameroom');
-const game = require('../db/game');
-const gameMods = require('../game_modules');
-const player = require('../db/player');
+const gameroom = require('../../db/gameroom');
+const game = require('../../db/game');
+const gameMods = require('../../game_modules');
+const player = require('../../db/player');
 
-
-const mainSocket = (server) => {
-  
-  var io = require('socket.io')(server);
-  
-  var sockets = [];
-  
-  const lobby = io.of('/lobby');
+const roomSocket = (io) => {
   const room = io.of('/gameroom');
-  
-  io.on('connection', function(socket){
-    sockets.push(socket);
-    console.log('#%s socket connected', sockets.length);
-    // user disconnect 
-    socket.on('disconnect', function(data){
-      sockets.splice(sockets.indexOf(socket),1);
-      console.log('#%s socket disconnected', sockets.length);
-    });
-  });
-
-  lobby.on('connection', function(socket){
-    //send a message
-    socket.on('chat message', function(data){
-      // console.log(data);
-      lobby.emit('message recieved', data);
-    });
-  });
-
-// ============================ Room Connections ============================
-
   room.on('connection', function(socket) {
 
     let socketRoomId = socket.handshake.query.id
     socket.join(socket.handshake.query.id);  
+
 
     const broadcastTurn = (current_turn, room_id) => {
       gameroom.getPlayerByTurn(current_turn, room_id).then(playerData => {
@@ -49,6 +22,12 @@ const mainSocket = (server) => {
     });
     // console.log("Socket id: "+socket.handshake.query.id);      
     socket.on('joined room', function(data) {
+      room.to(socketRoomId).emit("player joined", {joinedPlayer: data.username})      
+      gameroom.getPlayers(data.room_id).then((players) => {
+        players.forEach(function(roomPlayer) {
+          socket.emit("player joined", {joinedPlayer: roomPlayer.username})
+        });
+      });
       gameroom.getRoom(data.room_id).then((dbRoom) => {
         if(dbRoom.current_turn > 0) {
           gameroom.getPlayers(dbRoom.id).then((players) => {
@@ -122,8 +101,8 @@ const mainSocket = (server) => {
             console.log(playedCard);
             // console.log(gameMods.cardFunc[playedCard.symbol]);
             if( gameMods.cardFunc[playedCard.symbol] != undefined) {
+              room.to(socketRoomId).emit('new current card', {current_card: data.card});
               if(playedCard.symbol != 'wildcard') {
-                room.to(socketRoomId).emit('new current card', {current_card: data.card});
                 // console.log(gameMods.cardFunc[playedCard.symbol].toString());
                 gameMods.cardFunc[playedCard.symbol](data.room_id, data.user_id).then((playData) => {
                   if(playedCard.symbol == "d2" || playedCard.symbol == "d4") {
@@ -183,6 +162,6 @@ const mainSocket = (server) => {
     });
 
   });
-
 }
-module.exports = mainSocket;
+
+module.exports = roomSocket;

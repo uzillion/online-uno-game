@@ -33,7 +33,12 @@ $(function () {
   var socket = io.connect('/gameroom', {query: `id=${roomId}`});
   
   // Room Created signal
-  socket.emit('joined room', {room_id: roomId, user_id: userId});
+  socket.emit('joined room', {room_id: roomId, username: username});
+
+  socket.on('player joined', function(data) {
+    if(data.joinedPlayer != username)
+      $('#messages').append('<li class="center" style="color: red"><strong>' + data.joinedPlayer + '</strong> joined the room.</li>');
+  });
 
   // Start Game
   $('#start-button').on('click', function() {
@@ -77,7 +82,7 @@ $(function () {
       $('#draw-card').prop('disabled', false);
       $('#pass-trun').prop('disabled', false); 
     }
-    $('#turn-indicator').html(`<h6 style="color:red"><strong>${data.username}'s turn</strong></h4>`);
+    $('#turn-indicator').html(`<h6 class="center" style="color:red"><strong>${data.username}'s turn</strong></h4>`);
   });
 
   socket.on('card drawn', function(data) {
@@ -201,11 +206,18 @@ $(function () {
   // Change Color
   socket.on('change color', function(data) {
     if(data.user_id == userId) {
-      $('#my-hand').on('click', function(event) {
-        let newColor = event.target.id.split('_')[0];
+      $('#color-picker').html(`
+        <div id="red" class="row"></div>
+				<div id="blue" class="row"></div>
+				<div id="green" class="row"></div>
+				<div id="yellow" class="row"></div>
+      `)
+      $('#color-picker').on('click', function(event) {
+        let newColor = event.target.id;
         console.log(newColor);
         socket.emit('new color', {color: newColor, room_id: roomId});
-        $('#my-hand').off('click');
+        $('#color-picker').html('');
+        $('#color-picker').off('click');
       });
     }  
   });

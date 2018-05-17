@@ -1,6 +1,6 @@
 let pass, repass, email;
 const emailEx = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-const usernameEx = /^[a-zA-Z0-9]+([_\.]?[a-zA-Z0-9]){4,24}$/;
+const usernameEx = /^[a-zA-Z0-9]+([_\.]?[a-zA-Z0-9]){3,24}$/;
 let cond_username, cond_email, cond_pass;
 
 // $("input[type='submit']").attr("disabled", "disabled");
@@ -24,7 +24,7 @@ $("input").keyup(function() {
 
 	if(!usernameEx.test(usrnm) && usrnm!="") {
 		if(!($("#username").hasClass("is-invalid"))) {
-			formError($("#username"), "username needs to be atleast 5 characters long");
+			formError($("#username"), "username needs to be atleast 4 characters long");
 		}
 	} else {
 		if($("#username").hasClass("is-invalid")) {

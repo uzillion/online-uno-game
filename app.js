@@ -17,7 +17,7 @@ const bcrypt = require('bcrypt');
 const getUser = require('./db/user/getUser');
 
 var index = require('./routes/index');
-var user = require('./routes/user');
+var user = require('./routes/users');
 var gameroom = require('./routes/gameroom');
 
 var app = express();
