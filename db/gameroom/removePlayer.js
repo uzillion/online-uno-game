@@ -10,13 +10,13 @@ const removePlayer = (playerObject) => {
     .none( REMOVE_PLAYER_QUERY, VALUES )
     .then(() => {
       console.log("Player left the room");
-      database
-              .one(`UPDATE gameroom SET n_players=n_players-1 WHERE id=${playerObject.roomId}
-                    RETURNING n_players`)
-              .then((result) => {
-                if(result.n_players == 0)
-                  database.query(`DELETE FROM gameroom WHERE id=${playerObject.roomId}`);
-              });
+      return database
+        .one(`UPDATE gameroom SET n_players=n_players-1 WHERE id=${playerObject.roomId}
+              RETURNING n_players`)
+        .then((result) => {
+          if(result.n_players == 0)
+            return database.query(`DELETE FROM gameroom WHERE id=${playerObject.roomId}`);
+        });
     })
     .catch( error => console.log( "ERROR: ", error ) );
 };

@@ -153,6 +153,37 @@ form button {
   max-width: 16%;
 }
 
+#opponent-1:hover p .ncard {
+  opacity: 1;
+}
+#opponent-2:hover p .ncard {
+  opacity: 1;
+}
+#opponent-3:hover p .ncard {
+  opacity: 1;
+}
+
+#opponent-1:hover .danger {
+  border: solid 5px red;
+}
+#opponent-2:hover .danger {
+  border: solid 5px red;  
+}
+#opponent-3:hover .danger {
+  border: solid 5px red;  
+}
+
+#opponent-1:hover .safe {
+  border: solid 5px white;
+}
+#opponent-2:hover .safe {
+  border: solid 5px white;  
+}
+#opponent-3:hover .safe {
+  border: solid 5px white;  
+}
+
+
 #color-picker > div {
   width: 100%;
   height: 25%;

@@ -9,8 +9,8 @@ const validate_card = (user_id, room_id, card, callback) => {
       // console.log("card: "+JSON.stringify(card));
       if(card.symbol != 'wildcard') {
         if(room.current_turn == player.turn_number) {
-          if(card.color == room.current_card.color || card.symbol == room.current_card.symbol 
-            || room.current_card.symbol == 'd4' || card.symbol == 'd4') {
+          if(card.color == room.current_card.color || card.symbol == room.current_card.symbol || card.symbol == 'd4') {
+            // || room.current_card.symbol == 'd4' || card.symbol == 'd4') {
             callback(true);
           } else {
             // callback(false, "Sorry, that is not a valid card to play");

@@ -22,12 +22,19 @@ $(function () {
   let userId = parseInt($('#user-id').val());
   let username = $('#username').val();
 
-  $('#opponents div').hover((event) => {
-    // console.log(event.target.id);
-    $(`#${event.target.id}`).find('.ncard').css('opacity', '1');
-  }, (event) => {
-    $(`#${event.target.id}`).find('.ncard').css('opacity', '0');
-  });
+  const updateNcards = (user_id, change) => {
+    let old_val = parseInt($(`#${user_id}`).text());
+    // console.log(old_val, typeof old_val);
+    $(`#${user_id}`).html(`${old_val+change}`);
+    let uno_user = $(`#${user_id}`).parent().parent().parent().find('img');
+    if(old_val + change == 1 && !uno_user.hasClass('safe')) {
+      uno_user.addClass('danger');
+    }  
+    else
+      uno_user.removeClass('danger');
+      if(old_val + change > 1)
+        uno_user.removeClass('safe');
+  }
 
   //=================== SOCKET CONNECTIONS ====================
   var socket = io.connect('/gameroom', {query: `id=${roomId}`});
@@ -35,7 +42,7 @@ $(function () {
   // Room Created signal
   socket.emit('joined room', {room_id: roomId, username: username});
 
-  socket.on('player joined', function(data) {
+  socket.on('player joined', (data) => {
     if(data.joinedPlayer != username)
       $('#messages').append('<li class="center" style="color: red"><strong>' + data.joinedPlayer + '</strong> joined the room.</li>');
   });
@@ -74,7 +81,7 @@ $(function () {
     socket.emit('pass turn', {room_id: roomId, user_id: userId});
   });
 
-  socket.on('change turn', function(data) {
+  socket.on('change turn', (data) => {
     if(data.user_id != userId) {
       $('#draw-card').prop('disabled', true);
       $('#pass-trun').prop('disabled', true);      
@@ -85,7 +92,28 @@ $(function () {
     $('#turn-indicator').html(`<h6 class="center" style="color:red"><strong>${data.username}'s turn</strong></h4>`);
   });
 
-  socket.on('card drawn', function(data) {
+  $('#catch').on('click', () => {
+    let uno_users = $('.danger');
+    uno_users.css('cursor', 'pointer');
+    uno_users.on('click', (event) => {
+      let uno_user_id = $(`#${event.target.id}`).parent().find('p > span > span').attr('id');
+      socket.emit('caught', {user_id: uno_user_id, room_id: roomId});   
+      uno_users.css('cursor', 'default');
+      uno_users.off('click'); 
+    });
+  });
+
+  $('#uno').click(function() {
+    socket.emit('check uno', {user_id: userId, room_id: roomId});
+  });
+
+  socket.on('uno called', (data) => {
+    let uno_user = $(`#${data.user_id}`).parent().parent().parent().find('img');
+    uno_user.removeClass('danger');    
+    uno_user.addClass('safe');
+  });
+
+  socket.on('card drawn', (data) => {
     if(data.user_id == userId) {
       $('#draw-card').prop('disabled', true);    
       let position = parseInt($('#my-hand img').last().css('left'));
@@ -94,13 +122,14 @@ $(function () {
         <img style="position: absolute; left: ${position+60}px" id="${data.card.color}_${data.card.symbol}" src="/images/${data.card.color}_${data.card.symbol}.png">
       `);
     } else {
-      let old_val = parseInt($(`#${data.user_id}`).text());
-      console.log(old_val, typeof old_val);
-      $(`#${data.user_id}`).html(`${old_val+1}`);
+      updateNcards(data.user_id, 1);
+      // let old_val = parseInt($(`#${data.user_id}`).text());
+      // console.log(old_val, typeof old_val);
+      // $(`#${data.user_id}`).html(`${old_val+1}`);
     }
   });
 
-  socket.on('add cards', function(data) {
+  socket.on('add cards', (data) => {
     if(data.user_id ==  userId) {
       console.log("HANDololu: "+JSON.stringify(data.cards));
       data.cards.forEach((card) => {
@@ -110,14 +139,15 @@ $(function () {
         `);
       });
     } else {
-      let old_val = parseInt($(`#${data.user_id}`).text());
-      console.log(old_val, typeof old_val);
-      $(`#${data.user_id}`).html(`${old_val+data.cards.length}`);
+      updateNcards(data.user_id, data.cards.length);
+      // let old_val = parseInt($(`#${data.user_id}`).text());
+      // console.log(old_val, typeof old_val);
+      // $(`#${data.user_id}`).html(`${old_val+data.cards.length}`);
     }
   });
 
 
-  socket.on('hand', function(data) {
+  socket.on('hand', (data) => {
     console.log(data.username);
     if(data.user_id == userId) {
       let spaces = 0;
@@ -134,17 +164,17 @@ $(function () {
       if(data.turn_number != undefined) {
         if($('#opponent-1').html() == "") {
           $(`#opponent-1`).html(`
-            <img class="mx-auto d-block" src="/images/card_back_alt.png">
+            <img id='oc1' class="mx-auto d-block" src="/images/card_back_alt.png">
             <p style="color:red">${data.username}<span class="ncard">: <span id="${data.user_id}">${data.hand.hand.length}</span> cards</span></p>
           `)  
         } else if($('#opponent-2').html() == "") {
           $(`#opponent-2`).html(`
-            <img class="mx-auto d-block" src="/images/card_back_alt.png">
+            <img id='oc2' class="mx-auto d-block" src="/images/card_back_alt.png">
             <p style="color:red">${data.username}<span class="ncard">: <span id="${data.user_id}">${data.hand.hand.length}</span> cards</span></p>
           `)
         } else {
           $(`#opponent-3`).html(`
-            <img class="mx-auto d-block" src="/images/card_back_alt.png">
+            <img id='oc3' class="mx-auto d-block" src="/images/card_back_alt.png">
             <p style="color:red">${data.username}<span class="ncard">: <span id="${data.user_id}">${data.hand.hand.length}</span> cards</span></p>
           `)
         }
@@ -153,7 +183,7 @@ $(function () {
   });
 
   // // Next Turn
-  // socket.on('active turn', function(data) {
+  // socket.on('active turn', (data) => {
   //   if(data.user_id == userId) {
   //     $('#turn-indicator').show();
   //   } else {
@@ -162,27 +192,29 @@ $(function () {
   // });
 
   // Update current card
-  socket.on('new current card', function(data) {
+  socket.on('new current card', (data) => {
+    $('#start-button').hide();
     console.log("New Current card: " + data);
     $('#play-deck').html(`
       <img class="mx-auto d-block" id="play-deck" src="/images/${data.current_card.color}_${data.current_card.symbol}.png">
     `)
   });
 
-  socket.on('remove card', function(data) {
+  socket.on('remove card', (data) => {
     if(data.user_id == userId) {
       console.log("card removed");
       $(`#${data.card.color}_${data.card.symbol}`).remove();
     } else {
-      let old_val = parseInt($(`#${data.user_id}`).text());
-      console.log(old_val, typeof old_val);
-      $(`#${data.user_id}`).html(`${old_val-1}`);
+      updateNcards(data.user_id, -1);
+      // let old_val = parseInt($(`#${data.user_id}`).text());
+      // console.log(old_val, typeof old_val);
+      // $(`#${data.user_id}`).html(`${old_val-1}`);
     }
   })
 
   socket.on('message', function(){});
 
-  socket.on('error', function(data) {
+  socket.on('error', (data) => {
     if(data.user_id == userId) {
       console.log(data);
       let error_message;
@@ -204,7 +236,7 @@ $(function () {
   });
 
   // Change Color
-  socket.on('change color', function(data) {
+  socket.on('change color', (data) => {
     if(data.user_id == userId) {
       $('#color-picker').html(`
         <div id="red" class="row"></div>
@@ -222,7 +254,7 @@ $(function () {
     }  
   });
 
-  socket.on('won', function(data) {
+  socket.on('won', (data) => {
     let name;
     let score;
     if(data.user_id == userId) {

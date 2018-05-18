@@ -17,11 +17,11 @@ const roomSocket = (io) => {
       });
     }
 
-    socket.on('chat message', function(data) {
+    socket.on('chat message', (data) => {
       room.to(socketRoomId).emit('message recieved', data);
     });
     // console.log("Socket id: "+socket.handshake.query.id);      
-    socket.on('joined room', function(data) {
+    socket.on('joined room', (data) => {
       room.to(socketRoomId).emit("player joined", {joinedPlayer: data.username})      
       gameroom.getPlayers(data.room_id).then((players) => {
         players.forEach(function(roomPlayer) {
@@ -42,7 +42,7 @@ const roomSocket = (io) => {
       room.emit('add room button', data );
     });
 
-    socket.on('get hand', function(data) {
+    socket.on('get hand', (data) => {
       gameroom.getPlayer(data.user_id, data.room_id).then((player) => {
         // console.log(player);
         socket.emit('hand', {hand: player.hand});
@@ -50,7 +50,7 @@ const roomSocket = (io) => {
     });    
     
     // Start Game
-    socket.on('start game', function(data) {
+    socket.on('start game', (data) => {
       // console.log("Start signal received");
       gameroom.getRoom(data.room_id).then((dbRoom) => {
         gameroom.getPlayer(data.user_id, data.room_id).then((currentPlayer) => {
@@ -71,7 +71,7 @@ const roomSocket = (io) => {
       });
     })
 
-    socket.on('draw card', function(data) {
+    socket.on('draw card', (data) => {
       gameMods.validateTurn(data.room_id, data.user_id, function(result, turn) {
         if(result) {
           player.drawCard(data.user_id, data.room_id, 1).then((drawnCards) => {
@@ -81,7 +81,7 @@ const roomSocket = (io) => {
       });
     });
 
-    socket.on('pass turn', function(data) {
+    socket.on('pass turn', (data) => {
       gameMods.validateTurn(data.room_id, data.user_id, function(result, turn) {
         if(result) {
           game.nextTurn(data.room_id).then((newCurrentTurn) => {
@@ -92,7 +92,7 @@ const roomSocket = (io) => {
       });
     });
 
-    socket.on('play card', function(data) {
+    socket.on('play card', (data) => {
       // console.log(data);
       gameMods.validateCard(data.user_id, data.room_id, data.card, function(result, playError) {
         if(result == true) {
@@ -110,6 +110,9 @@ const roomSocket = (io) => {
                     return player.nextPlayer(data.room_id).then((nextPlayer) => {
                       // console.log(nextPlayer);
                       room.to(socketRoomId).emit('add cards', {user_id: nextPlayer.user_id, cards: playData});
+                      if(playedCard.symbol == "d4") {
+                        room.to(socketRoomId).emit('change color', {user_id: data.user_id});                
+                      }
                     });
                   }
                 }).then(() => {
@@ -136,7 +139,13 @@ const roomSocket = (io) => {
               } else {
                 gameMods.calcScore(data.room_id).then((calcedScore) => {
                   player.updateScore(dbPlayer.user_id, calcedScore).then(() => {
-                    room.to(socketRoomId).emit('won', {user_id: dbPlayer.user_id, username: data.username, score: calcedScore});
+                    gameroom.getPlayers(data.room_id).then((players) => {
+                      // players.forEach((roomPlayer) => {
+                      //   gameroom.removePlayer({userId: data.user_id, roomId: data.room_id}).then(() => {
+                      //   });
+                      // });
+                      room.to(socketRoomId).emit('won', {user_id: dbPlayer.user_id, username: data.username, score: calcedScore});
+                    });
                   });
                 });
               }
@@ -151,7 +160,7 @@ const roomSocket = (io) => {
       });
     });
 
-    socket.on('new color', function(data) {
+    socket.on('new color', (data) => {
       game.changeColor(data.room_id, data.color);
       room.to(socketRoomId).emit('new current card', {current_card: {color: data.color, symbol: "none"}});
       console.log("Signal emitted");
@@ -159,6 +168,24 @@ const roomSocket = (io) => {
       //   console.log(nextTurnNumber);
       //   room.to(socketRoomId).emit('change turn', {turn_number: nextTurnNumber.current_turn});
       // });
+    });
+
+    socket.on('check uno', (data) => {
+      gameroom.getPlayer(data.user_id, data.room_id).then((dbPlayer) => {
+        if(dbPlayer.hand.hand.length == 1) {
+          room.to(socketRoomId).emit('uno called', {user_id: data.user_id});
+        } else {
+          player.drawCard(data.user_id, data.room_id, 2).then((playData) => {
+            room.to(socketRoomId).emit('add cards', {user_id: data.user_id, cards: playData});
+          });
+        }
+      });
+    });
+
+    socket.on('caught', (data) => {
+      player.drawCard(data.user_id, data.room_id, 2).then((playData) => {
+        room.to(socketRoomId).emit('add cards', {user_id: data.user_id, cards: playData});
+      });
     });
 
   });
