@@ -15,7 +15,7 @@ const playCard = (room_id, user_id, playedCard) => {
   return database
     .one(GET_HAND_QUERY, [user_id, room_id])
     .then((dbHand) => {
-      console.log("Played Card: "+JSON.stringify(playedCard));
+      // console.log("Played Card: "+JSON.stringify(playedCard));
       let hand = dbHand.hand.hand;
       // console.log(hand);
       let index = hand.findIndex(x => x.symbol == playedCard.symbol && x.color == playedCard.color);

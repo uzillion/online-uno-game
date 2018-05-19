@@ -9,6 +9,8 @@
         Sorry, room <%= error.room %> does not exist any more.
       <% } else if(error.message == 'unknownError') { %>
         Sorry, an unknown error occurred.
+      <% } else if(error.message == 'gameStarted') { %>
+        Sorry, room <%= error.room %> has already started the game.
       <% } %>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>

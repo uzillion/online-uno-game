@@ -21,28 +21,32 @@ router.post('/create', isLoggedIn, function(request, response) {
 router.get('/join/:id', isLoggedIn, function(request, response) {
   const room_id = request.params.id;
   gameroom.getRoom(room_id).then((room) => {
-    console.log(room);
-    if(room == null) {
-      response.redirect('/?error=doesNotExist&id='+room_id);      
-    }else if(room.n_players < 4) {
-      gameroom.getPlayers(room_id).then((players) => {
-        console.log(players);
-        if(players.findIndex(x => x.user_id == request.user.id) == -1) {
-          gameroom.addPlayer({userId: request.user.id, roomId: room_id, turn: room.n_players+1}).then((player) => {
-            console.log("Player with user id "+player.user_id+" joined room "+ player.room_id);
+    gameroom.getPlayer(request.user.id, room_id).then((dbPlayer) => {
+      console.log(dbPlayer);
+      // console.log(room);
+      if(room == null) {
+        response.redirect('/?error=doesNotExist&id='+room_id);      
+      } else if(room.current_turn != 0 && dbPlayer == null) {
+        response.redirect('/?error=gameStarted&id='+room_id);        
+      } else if(room.n_players < 4) {
+        gameroom.getPlayers(room_id).then((players) => {
+          // console.log(players);
+          if(players.findIndex(x => x.user_id == request.user.id) == -1) {
+            gameroom.addPlayer({userId: request.user.id, roomId: room_id, turn: room.n_players+1}).then((player) => {
+              console.log("Player with user id "+player.user_id+" joined room "+ player.room_id);
+              response.redirect('/gameroom/'+room_id);
+            });
+          } else {
             response.redirect('/gameroom/'+room_id);
-          });
-        } else {
-          response.redirect('/gameroom/'+room_id);
-        }
-      });
-    } 
-    else if(room.n_players == 4) {
-      response.redirect('/?error=roomFull&id='+room_id);
-    }
-    else {
-      response.redirect('/?error=unknownError');
-    }
+          }
+        });
+      } else if(room.n_players >= 4) {
+        response.redirect('/?error=roomFull&id='+room_id);
+      }
+      else {
+        response.redirect('/?error=unknownError');
+      }
+    });
   });
   // .catch((error) => {
   //   response.redirect('/gameroom/'+room_id);

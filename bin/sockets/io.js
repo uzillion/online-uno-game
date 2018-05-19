@@ -8,10 +8,10 @@ const mainSocket = (server) => {
   
   const lobby = io.of('/lobby');
   
+  // Logging whenever a socket is connected or disconnectedd
   io.on('connection', function(socket){
     sockets.push(socket);
     console.log('#%s socket connected', sockets.length);
-    // user disconnect 
     socket.on('disconnect', function(data){
       sockets.splice(sockets.indexOf(socket),1);
       console.log('#%s socket disconnected', sockets.length);
@@ -19,9 +19,9 @@ const mainSocket = (server) => {
   });
 
   lobby.on('connection', function(socket){
-    //send a message
+
+    // Broadcasting chat message to all active users
     socket.on('chat message', function(data){
-      // console.log(data);
       lobby.emit('message recieved', data);
     });
   });

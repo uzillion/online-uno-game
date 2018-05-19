@@ -5,7 +5,7 @@ const GET_PLAYER_QUERY = `SELECT * FROM player
 
 const getPlayer = (user_id, room_id) => {
   return database
-    .one(GET_PLAYER_QUERY, [user_id, room_id])
+    .oneOrNone(GET_PLAYER_QUERY, [user_id, room_id])
     .catch( error => { console.log( "Could not get player: ", error.stack);});
 }
 

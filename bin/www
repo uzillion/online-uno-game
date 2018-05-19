@@ -3,7 +3,6 @@
 /**
  * Module dependencies.
  */
-
 var app = require('../app');
 var io = require('./sockets/io');
 var debug = require('debug')('term-project-team-g:server');
@@ -12,79 +11,26 @@ var http = require('http');
 /**
  * Get port from environment and store in Express.
  */
-
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
-
 var server = http.createServer(app);
 
 io(server);
-// var io = require('socket.io')(server);
-
-// const room = io.of('/gameroom');
-
-// io.on('connection', function(socket){
-//   sockets.push(socket);
-//   console.log('#%s socket connected', sockets.length);
-//   //send a message
-//   socket.on('chat message', function(data){
-//     console.log(data);
-//     io.emit('chat message', data);
-//   });
-//   // user disconnect 
-//   socket.on('disconnect', function(data){
-//     sockets.splice(sockets.indexOf(socket),1);
-//     console.log('#%s socket disconnected', sockets.length);
-//   });
-// });
-
-// room.on('connection', function(socket) {
-//   console.log("Joined room");
-// });
 
 /**
  * Listen on provided port, on all network interfaces.
  */
-
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
-// function addParticipantsMessage (data) {
-//     var message = '';
-//     if (data.numUsers === 1) {
-//       message += "there's 1 participant";
-//     } else {
-//       message += "there are " + data.numUsers + " participants";
-//     }
-//     numUsers = data.numUsers;
-//     log(message);
-// }
-// function setUsername () {
-//     username = cleanInput($usernameInput.val().trim());
-
-//     // If the username is valid
-//     if (username) {
-//       // $loginPage.fadeOut();
-//       // $chatPage.show();
-//       // $loginPage.off('click');
-//       // $currentInput = $inputMessage.focus();
-
-//       // Tell the server your username
-//       socket.emit('add user', username);
-//     }
-//     else{
-//       username = "guest"+ numUsers;
-//     }
-//   }
 /**
  * Normalize a port into a number, string, or false.
  */
-
 function normalizePort(val) {
   var port = parseInt(val, 10);
 
